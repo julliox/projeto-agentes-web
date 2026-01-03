@@ -1,0 +1,136 @@
+<!-- turno-tabela-page.component.html -->
+
+<!-- Breadcrumb -->
+<div
+    class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <h5 class="mb-0">Tabela de Turnos</h5>
+
+    <div class="d-flex align-items-center" style="gap: 15px;margin-right: auto; margin-left: 15px">
+        <mat-form-field appearance="outline" style="width: 50%;">
+            <mat-label>Selecionar Mês</mat-label>
+            <input
+                matInput
+                [matDatepicker]="mesPicker"
+                [formControl]="mesSelecionadoControl"
+                (dateChange)="onMesChange($event)"
+            />
+            <mat-datepicker-toggle matSuffix [for]="mesPicker"></mat-datepicker-toggle>
+            <mat-datepicker
+                #mesPicker
+                startView="multi-year"
+                (monthSelected)="chosenMonthHandler($event, mesPicker)"
+                panelClass="month-picker"
+            ></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-raised-button color="accent" (click)="downloadExcel()" [disabled]="isLoading || !agentes.length">
+            <i style="font-size: x-large" class="ri-file-excel-2-fill"></i>
+        </button>
+    </div>
+
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Help Desk
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Turnos</li>
+        <li class="breadcrumb-item position-relative">Tabela de Turnos</li>
+    </ol>
+</div>
+
+<!-- Seleção de Mês e Tabela -->
+<mat-card
+    class="daxa-card border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+<!--    <mat-card-header>-->
+<!--        <mat-card-title>-->
+<!--            <h5 class="mb-0">Turnos dos Agentes</h5>-->
+<!--        </mat-card-title>-->
+<!--        <mat-card-subtitle>-->
+<!--            <div class="header-controls">-->
+<!--                &lt;!&ndash; Seletor de Mês &ndash;&gt;-->
+<!--                <mat-form-field appearance="outline" class="mes-selector">-->
+<!--                    <mat-label>Selecionar Mês</mat-label>-->
+<!--                    <input-->
+<!--                        matInput-->
+<!--                        [matDatepicker]="mesPicker"-->
+<!--                        [formControl]="mesSelecionadoControl"-->
+<!--                        (dateChange)="onMesChange($event)"-->
+<!--                    />-->
+<!--                    <mat-datepicker-toggle matSuffix [for]="mesPicker"></mat-datepicker-toggle>-->
+<!--                    <mat-datepicker-->
+<!--                        #mesPicker-->
+<!--                        startView="multi-year"-->
+<!--                        (monthSelected)="chosenMonthHandler($event, mesPicker)"-->
+<!--                        panelClass="month-picker"-->
+<!--                    ></mat-datepicker>-->
+<!--                </mat-form-field>-->
+<!--                -->
+<!--                &lt;!&ndash; Botões &ndash;&gt;-->
+<!--                <button mat-raised-button color="primary" class="btn-gerar-relatorio" (click)="geraPDFTESTEteste()">-->
+<!--                    <mat-icon>description</mat-icon>-->
+<!--                    Gerar Relatório-->
+<!--                </button>-->
+<!--                <button mat-stroked-button color="primary" class="btn-escolher-arquivo" (click)="fileInput.click()">-->
+<!--                    <mat-icon>upload_file</mat-icon>-->
+<!--                    Escolher Arquivo-->
+<!--                </button>-->
+<!--                <input -->
+<!--                    #fileInput-->
+<!--                    type="file" -->
+<!--                    accept=".csv" -->
+<!--                    (change)="onFileSelected($event)" -->
+<!--                    style="display: none;"-->
+<!--                />-->
+<!--            </div>-->
+<!--        </mat-card-subtitle>-->
+<!--    </mat-card-header>-->
+    <mat-card-content>
+        <!-- Indicador de Carregamento -->
+        <div *ngIf="isLoading" class="loading-spinner">
+            <mat-spinner diameter="30"></mat-spinner>
+        </div>
+
+        <!-- Mensagem de Erro -->
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+
+        <!-- Tabela de Turnos -->
+        <div class="table-responsive" *ngIf="!isLoading && !errorMessage">
+            <table class="custom-table">
+                <thead>
+                <tr>
+                    <th>Agentes</th>
+                    <th *ngFor="let date of diasDoMes">
+                        {{ formatarDataSimples(date) }}<br />
+                        {{ obterDiaDaSemana(date) }}
+                    </th>
+                </tr>
+                </thead>
+                <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+                <tr *ngFor="let agente of agentes; let i = index" cdkDrag>
+                    <td class="agente-cell" style="margin: 1px">
+                            <span cdkDragHandle class="drag-handle">
+                                <mat-icon>drag_handle</mat-icon>
+                            </span>
+                        <span class="agente-nome">{{ agente.name | shortName }}</span>
+                    </td>
+                    <td *ngFor="let date of diasDoMes">
+                      <span *ngIf="turnosMapa[agente.id]?.[formatarData(date)]"
+                            [ngClass]="obterClasseTurno(turnosMapa[agente.id][formatarData(date)])">
+                        {{ turnosMapa[agente.id][formatarData(date)] }}
+                      </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>

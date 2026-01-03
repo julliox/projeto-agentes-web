@@ -1,0 +1,87 @@
+.global-alerts-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 400px;
+    width: 100%;
+}
+
+.global-alert {
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideInRight 0.3s ease-out;
+    max-width: 100%;
+    word-wrap: break-word;
+    
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.alert-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    flex: 1;
+}
+
+.alert-icon {
+    font-size: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.alert-message {
+    flex: 1;
+    line-height: 1.4;
+}
+
+.close {
+    margin-left: 12px;
+    font-size: 16px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+        opacity: 1;
+    }
+}
+
+// Animações
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+    .global-alerts-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .global-alert {
+        margin-bottom: 8px;
+    }
+}
+
+// Dark theme adjustments
+.component-dark-theme {
+    .global-alert {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .close {
+        color: var(--whiteColor);
+    }
+} 

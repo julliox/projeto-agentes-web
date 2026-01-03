@@ -1,0 +1,70 @@
+<div class="ponto-container">
+  <div class="ponto-card bg-white">
+    <h2>Registro de Ponto</h2>
+    <p class="status" [class.on]="isClockedIn" [class.off]="!isClockedIn">
+      Status: {{ isClockedIn ? 'Em expediente' : 'Fora de expediente' }}
+    </p>
+
+    <button mat-raised-button color="primary" class="big-toggle" (click)="togglePunch()" [disabled]="isLoading">
+      <ng-container *ngIf="!isLoading; else loadingTpl">
+        {{ actionLabel }}
+      </ng-container>
+      <ng-template #loadingTpl>
+        <span class="loading-inline">
+          <mat-spinner diameter="22"></mat-spinner>
+          <span>{{ processingLabel }}</span>
+        </span>
+      </ng-template>
+    </button>
+
+    <div class="actions">
+      <button mat-stroked-button color="primary" class="refresh-btn" (click)="refreshHistory(true)" [disabled]="isLoading || isLoadingHistory">
+        Atualizar histórico
+      </button>
+    </div>
+  </div>
+
+  <div class="history-card bg-white">
+    <h3>Histórico</h3>
+    <div class="table-responsive">
+      <table class="history-table">
+        <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Data</th>
+          <th>Hora</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of history">
+          <td>
+            <span class="chip" [class.entrada]="item.type === 'ENTRADA'" [class.saida]="item.type === 'SAIDA'">
+              {{ item.type === 'ENTRADA' ? 'Entrada' : 'Saída' }}
+            </span>
+          </td>
+          <td>{{ item.timestamp | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ item.timestamp | date: 'HH:mm:ss' }}</td>
+        </tr>
+      <tr *ngIf="history.length === 0 && !isLoadingHistory">
+        <td colspan="3" class="empty">Nenhum registro ainda.</td>
+      </tr>
+      <tr *ngIf="isLoadingHistory">
+        <td colspan="3" class="loading-row">
+          <span class="loading-inline">
+            <mat-spinner diameter="22"></mat-spinner>
+            <span>Carregando histórico...</span>
+          </span>
+        </td>
+      </tr>
+        </tbody>
+      </table>
+    <div class="history-footer" *ngIf="history.length > 0">
+      <button mat-stroked-button color="primary" (click)="refreshHistory(false)" [disabled]="isLoadingHistory || !hasNext">
+        Carregar mais
+      </button>
+    </div>
+    </div>
+  </div>
+</div>
+
+

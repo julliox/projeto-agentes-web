@@ -1,0 +1,126 @@
+<!-- Breadcrumb -->
+<div
+    class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <h5 class="mb-0">
+        <i class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px;">calendar_month</i>
+        Calendário de Turnos
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Turnos</li>
+        <li class="breadcrumb-item position-relative">Calendário</li>
+    </ol>
+</div>
+
+<!-- Estatísticas do Mês -->
+<div class="row mb-25" *ngIf="!isLoading">
+    <div class="col-md-3">
+        <mat-card class="daxa-card stats-card text-center border-radius bg-white border-none">
+            <mat-card-content>
+                <i class="material-symbols-outlined text-primary" style="font-size: 32px;">people</i>
+                <h4 class="mt-2 mb-1">{{ totalAgents }}</h4>
+                <p class="text-muted mb-0">Total de Agentes</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="col-md-3">
+        <mat-card class="daxa-card stats-card text-center border-radius bg-white border-none">
+            <mat-card-content>
+                <i class="material-symbols-outlined text-info" style="font-size: 32px;">schedule</i>
+                <h4 class="mt-2 mb-1">{{ totalTurnos }}</h4>
+                <p class="text-muted mb-0">Total de Turnos</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="col-md-3">
+        <mat-card class="daxa-card stats-card text-center border-radius bg-white border-none">
+            <mat-card-content>
+                <i class="material-symbols-outlined text-success" style="font-size: 32px;">check_circle</i>
+                <h4 class="mt-2 mb-1">{{ agentsWithTurnos }}</h4>
+                <p class="text-muted mb-0">Agentes com Turnos</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="col-md-3">
+        <mat-card class="daxa-card stats-card text-center border-radius bg-white border-none">
+            <mat-card-content>
+                <i class="material-symbols-outlined text-warning" style="font-size: 32px;">event</i>
+                <h4 class="mt-2 mb-1">{{ getCurrentMonthFormatted() }}</h4>
+                <p class="text-muted mb-0">Mês Atual</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<!-- Calendário de Turnos -->
+<div class="row">
+    <div class="col-12">
+        <mat-card
+            class="daxa-card turnos-calendar-card mb-25 border-radius bg-white border-none d-block"
+            [class.component-dark-theme]="themeService.isDark()"
+            [class.rtl-enabled]="themeService.isRTLEnabled()"
+        >
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mb-0">
+                        <i class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px;">calendar_view_month</i>
+                        Panorama Geral de Turnos - {{ displayMonthText }}
+                    </h5>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <!-- Indicador de Carregamento -->
+                <div *ngIf="isLoading" class="loading-container text-center py-4">
+                    <mat-spinner diameter="40" class="mx-auto"></mat-spinner>
+                    <p class="mt-2 text-muted">Carregando turnos...</p>
+                </div>
+
+                <!-- Calendário -->
+                <div *ngIf="!isLoading" class="calendar-wrapper">
+                    <full-calendar [options]="calendarOptions"></full-calendar>
+                </div>
+
+                <!-- Legenda -->
+                <div *ngIf="!isLoading" class="legend-container mt-4">
+                    <h6 class="legend-title mb-3">
+                        <i class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px;">info</i>
+                        Legenda de Turnos
+                    </h6>
+                    <div class="legend-items">
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #2ed47e;"></span>
+                            <span class="legend-label">Diurno</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #796df6;"></span>
+                            <span class="legend-label">Noturno</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #00cae3;"></span>
+                            <span class="legend-label">Matutino</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #ffb264;"></span>
+                            <span class="legend-label">Vespertino</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #0f79f3;"></span>
+                            <span class="legend-label">Madrugada</span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+

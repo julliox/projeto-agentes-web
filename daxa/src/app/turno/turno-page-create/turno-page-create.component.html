@@ -1,0 +1,120 @@
+<!-- Breadcrumb -->
+<div
+    class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <h5 class="mb-0">Criação de Turnos</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Help Desk
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Turnos</li>
+        <li class="breadcrumb-item position-relative">Criar Turno</li>
+    </ol>
+</div>
+
+<!-- Formulário de Criação de Turno -->
+<mat-card
+    class="daxa-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">Criação de Turno para Agentes</h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <!-- Mensagem de Sucesso -->
+        <div *ngIf="successMessage" class="success-message">
+            {{ successMessage }}
+        </div>
+
+        <!-- Mensagem de Erro -->
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+
+        <!-- Formulário de Criação de Turno -->
+        <form [formGroup]="turnoForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+                <!-- Selecionar Agente -->
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Agente</mat-label>
+                    <mat-select formControlName="agentId" required>
+                        <mat-option *ngFor="let agente of agentes$ | async" [value]="agente.id">
+                            {{ agente.name }} ({{ agente.email }})
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="turnoForm.get('agentId')?.hasError('required') && (turnoForm.get('agentId')?.touched || turnoForm.get('agentId')?.dirty)">
+                        Agente é obrigatório
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Tipo de Turno -->
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Tipo de Turno</mat-label>
+                    <mat-select formControlName="typeTurn" required>
+                        <mat-option *ngFor="let tipo of tiposTurnos" [value]="tipo.id">
+                            {{ tipo.descricao }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="turnoForm.get('typeTurn')?.hasError('required') && (turnoForm.get('typeTurn')?.touched || turnoForm.get('typeTurn')?.dirty)">
+                        Tipo de turno é obrigatório
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Múltiplas Datas do Turno -->
+            <div formArrayName="dataTurno" class="data-turno-container">
+                <div *ngFor="let dataCtrl of dataTurno.controls; let i = index" [formGroupName]="i" class="data-turno-group">
+                    <mat-form-field appearance="outline" class="date-field">
+                        <mat-label>Data do Turno</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="data" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="dataCtrl.get('data')?.hasError('required') && (dataCtrl.get('data')?.touched || dataCtrl.get('data')?.dirty)">
+                            Data do turno é obrigatória
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- Botão para Remover Data -->
+                    <button 
+                        [disabled]="dataTurno.controls.length == 1" 
+                        mat-icon-button 
+                        color="warn" 
+                        type="button" 
+                        class="remove-button"
+                        (click)="removeDataTurno(i)"
+                    >
+                        <mat-icon>remove_circle</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botão para Adicionar Mais Datas -->
+            <div class="add-button-container">
+                <button mat-stroked-button type="button" color="primary" (click)="addDataTurno()">
+                    <mat-icon>add</mat-icon>
+                    Adicionar Data
+                </button>
+            </div>
+
+            <!-- Botão de Submissão -->
+            <div class="submit-button-container">
+                <button mat-raised-button color="primary" type="submit" [disabled]="isLoading || turnoForm.invalid">
+                    <mat-icon>save</mat-icon>
+                    {{ isLoading ? 'Criando...' : 'Criar Turno' }}
+                </button>
+            </div>
+        </form>
+
+        <!-- Calendário de Turnos do Agente Selecionado -->
+        <div *ngIf="selectedAgentId" class="calendar-container">
+            <h6 class="calendar-title">Calendário de Turnos do Agente</h6>
+            <full-calendar [options]="calendarOptions"></full-calendar>
+        </div>
+    </mat-card-content>
+</mat-card>

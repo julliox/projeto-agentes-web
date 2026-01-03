@@ -1,0 +1,397 @@
+<div class="teams-page-container">
+    <!-- Header da Página -->
+    <div class="page-header mb-25">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="page-title">
+                    <h3 class="mb-0">
+                        <i class="material-symbols-outlined">groups</i>
+                        Gerenciamento de Equipes
+                    </h3>
+                    <p class="text-body mb-0">Crie e gerencie equipes de trabalho</p>
+                </div>
+            </div>
+            <div class="col-lg-6 text-end" *ngIf="isAdministrator()">
+                <button 
+                    mat-raised-button 
+                    color="primary" 
+                    class="btn-primary"
+                    (click)="showCreateForm()"
+                    [disabled]="isFormVisible"
+                >
+                    <i class="material-symbols-outlined">add</i>
+                    Nova Equipe
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulário de Criação/Edição -->
+    <mat-card 
+        class="daxa-card team-form-card mb-25 border-radius bg-white border-none d-block"
+        [class.component-dark-theme]="themeService.isDark()"
+        [class.rtl-enabled]="themeService.isRTLEnabled()"
+        *ngIf="isFormVisible"
+    >
+        <mat-card-header>
+            <mat-card-title>
+                <h5 class="mb-0">
+                    <i class="material-symbols-outlined">{{ isEditing ? 'edit' : 'add' }}</i>
+                    {{ isEditing ? 'Editar Equipe' : 'Nova Equipe' }}
+                </h5>
+            </mat-card-title>
+        </mat-card-header>
+        
+        <mat-card-content>
+            <form [formGroup]="teamForm" (ngSubmit)="onSubmit()" class="team-form">
+                <div class="row">
+                    <!-- Nome da Equipe -->
+                    <div class="col-md-6 mb-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Nome da Equipe</mat-label>
+                            <input 
+                                matInput 
+                                formControlName="name" 
+                                placeholder="Ex: Equipe Matutina"
+                                maxlength="100"
+                            >
+                            <mat-error *ngIf="teamForm.get('name')?.hasError('required')">
+                                Nome da equipe é obrigatório
+                            </mat-error>
+                            <mat-error *ngIf="teamForm.get('name')?.hasError('minlength')">
+                                Nome deve ter pelo menos 3 caracteres
+                            </mat-error>
+                            <mat-error *ngIf="teamForm.get('name')?.hasError('maxlength')">
+                                Nome deve ter no máximo 100 caracteres
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Horário de Início -->
+                    <div class="col-md-3 mb-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Horário de Início</mat-label>
+                            <input 
+                                matInput 
+                                formControlName="workStartTime" 
+                                type="time"
+                                placeholder="08:00"
+                            >
+                            <mat-error *ngIf="teamForm.get('workStartTime')?.hasError('required')">
+                                Horário de início é obrigatório
+                            </mat-error>
+                            <mat-error *ngIf="teamForm.get('workStartTime')?.hasError('pattern')">
+                                Formato inválido (HH:MM)
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Horário de Fim -->
+                    <div class="col-md-3 mb-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Horário de Fim</mat-label>
+                            <input 
+                                matInput 
+                                formControlName="workEndTime" 
+                                type="time"
+                                placeholder="17:00"
+                            >
+                            <mat-error *ngIf="teamForm.get('workEndTime')?.hasError('required')">
+                                Horário de fim é obrigatório
+                            </mat-error>
+                            <mat-error *ngIf="teamForm.get('workEndTime')?.hasError('pattern')">
+                                Formato inválido (HH:MM)
+                            </mat-error>
+                            <mat-error *ngIf="teamForm.get('workEndTime')?.hasError('invalidTime')">
+                                Horário de fim deve ser posterior ao início
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Seleção de Agentes -->
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Agentes da Equipe</mat-label>
+                            <mat-select formControlName="agentIds" multiple placeholder="Selecione os agentes">
+                                <mat-option *ngFor="let agent of agents" [value]="agent.id">
+                                    <div class="agent-option">
+                                        <span class="agent-name">{{ agent.name }}</span>
+                                        <small class="agent-email text-muted">{{ agent.email }}</small>
+                                    </div>
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="teamForm.get('agentIds')?.hasError('required')">
+                                Selecione pelo menos um agente
+                            </mat-error>
+                            <mat-error *ngIf="teamForm.get('agentIds')?.hasError('minlength')">
+                                Selecione pelo menos um agente
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="row">
+                    <div class="col-12 text-end">
+                        <button 
+                            type="button" 
+                            mat-button 
+                            class="btn-secondary me-2"
+                            (click)="hideForm()"
+                            [disabled]="isLoading"
+                        >
+                            Cancelar
+                        </button>
+                        <button 
+                            type="submit" 
+                            mat-raised-button 
+                            color="primary"
+                            class="btn-primary"
+                            [disabled]="teamForm.invalid || isLoading"
+                        >
+                            <mat-spinner 
+                                diameter="20" 
+                                *ngIf="isLoading"
+                                class="me-2"
+                            ></mat-spinner>
+                            <i class="material-symbols-outlined me-2" *ngIf="!isLoading">
+                                {{ isEditing ? 'save' : 'add' }}
+                            </i>
+                            {{ isEditing ? 'Salvar Alterações' : 'Criar Equipe' }}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Tabela de Equipes -->
+    <mat-card 
+        class="daxa-card teams-table-card border-radius bg-white border-none d-block"
+        [class.component-dark-theme]="themeService.isDark()"
+        [class.rtl-enabled]="themeService.isRTLEnabled()"
+    >
+        <mat-card-header>
+            <mat-card-title>
+                <h5 class="mb-0">
+                    <i class="material-symbols-outlined">table_chart</i>
+                    Equipes Cadastradas
+                </h5>
+            </mat-card-title>
+        </mat-card-header>
+        
+        <mat-card-content>
+            <!-- Filtros -->
+            <div class="filters-container mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>
+                                <i class="material-symbols-outlined">search</i>
+                                Buscar equipes
+                            </mat-label>
+                            <input 
+                                matInput 
+                                (keyup)="applyFilter($event)" 
+                                placeholder="Digite para filtrar..."
+                                [disabled]="isSearching"
+                            >
+                            <mat-icon matSuffix *ngIf="isSearching" class="searching-indicator">
+                                <mat-spinner diameter="16"></mat-spinner>
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>
+                                <i class="material-symbols-outlined">filter_list</i>
+                                Status
+                            </mat-label>
+                            <mat-select [(value)]="statusFilter" (selectionChange)="filterByStatus($event.value)">
+                                <mat-option value="">Todos os status</mat-option>
+                                <mat-option value="ACTIVE">Ativas</mat-option>
+                                <mat-option value="INACTIVE">Inativas</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indicador de Carregamento -->
+            <div *ngIf="isLoading" class="loading-container text-center py-4">
+                <mat-spinner diameter="40" class="mx-auto"></mat-spinner>
+                <p class="mt-2 text-muted">Carregando equipes...</p>
+            </div>
+
+            <!-- Tabela -->
+            <div class="table-responsive" *ngIf="!isLoading">
+                <table mat-table [dataSource]="dataSource" matSort class="w-100">
+                    <!-- Nome da Equipe -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome da Equipe </th>
+                        <td mat-cell *matCellDef="let team"> 
+                            <div class="team-name">
+                                <strong>{{ team.name }}</strong>
+                                <small class="text-muted d-block">ID: {{ team.id }}</small>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Horário de Trabalho -->
+                    <ng-container matColumnDef="workTime">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Horário de Trabalho </th>
+                        <td mat-cell *matCellDef="let team"> 
+                            <div class="work-time">
+                                <i class="material-symbols-outlined text-primary me-1">schedule</i>
+                                {{ formatWorkTime(team) }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Duração -->
+                    <ng-container matColumnDef="duration">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Duração </th>
+                        <td mat-cell *matCellDef="let team"> 
+                            <span class="badge bg-info">{{ calculateDuration(team) }}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Quantidade de Agentes -->
+                    <ng-container matColumnDef="agentsCount">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Agentes </th>
+                        <td mat-cell *matCellDef="let team"> 
+                            <div class="agents-count">
+                                <div class="badge-container">
+                                    <span class="badge bg-primary">{{ getAgentsCount(team) }}</span>
+                                    <i class="material-symbols-outlined">people</i>
+                                </div>
+                                <small class="text-muted d-block">{{ getAgentsCount(team) }} agente(s)</small>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Status -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                        <td mat-cell *matCellDef="let team"> 
+                            <mat-slide-toggle
+                                [checked]="team.status === 'ACTIVE'"
+                                (change)="toggleTeamStatus(team)"
+                                [disabled]="!isAdministrator()"
+                                color="primary"
+                            >
+                                <span class="status-badge" [class]="'status-' + team.status.toLowerCase()">
+                                    {{ team.status === 'ACTIVE' ? 'Ativa' : 'Inativa' }}
+                                </span>
+                            </mat-slide-toggle>
+                        </td>
+                    </ng-container>
+
+                    <!-- Data de Criação -->
+                    <ng-container matColumnDef="createdAt">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Criada em </th>
+                        <td mat-cell *matCellDef="let team"> 
+                            <div class="created-date">
+                                <i class="material-symbols-outlined text-muted me-1">event</i>
+                                {{ formatDate(team.createdAt) }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Ações -->
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef> Ações </th>
+                        <td mat-cell *matCellDef="let team"> 
+                            <div class="actions-buttons">
+                                <button 
+                                    mat-icon-button 
+                                    matTooltip="Editar equipe"
+                                    (click)="showEditForm(team)"
+                                    *ngIf="isAdministrator()"
+                                    class="btn-edit"
+                                >
+                                    <i class="material-symbols-outlined">edit</i>
+                                </button>
+                                
+                                <button 
+                                    mat-icon-button 
+                                    matTooltip="Remover equipe"
+                                    (click)="deleteTeam(team)"
+                                    *ngIf="isAdministrator()"
+                                    class="btn-delete"
+                                >
+                                    <i class="material-symbols-outlined">delete</i>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <!-- Paginação -->
+                <mat-paginator 
+                    [pageSizeOptions]="[5, 10, 25, 50]" 
+                    [pageSize]="pageSize"
+                    [length]="totalElements"
+                    [pageIndex]="currentPage"
+                    showFirstLastButtons
+                    aria-label="Selecione a página de equipes"
+                ></mat-paginator>
+
+                <!-- Mensagem quando não há dados -->
+                <div *ngIf="dataSource.data.length === 0" class="no-data text-center py-4">
+                    <i class="material-symbols-outlined text-muted" style="font-size: 48px;">groups_off</i>
+                    <h6 class="mt-2 text-muted">Nenhuma equipe encontrada</h6>
+                    <p class="text-muted">Crie sua primeira equipe para começar</p>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Estatísticas Rápidas -->
+    <div class="row mt-4" *ngIf="teams.length > 0">
+        <div class="col-md-3">
+            <mat-card class="daxa-card stats-card text-center border-radius bg-white border-none">
+                <mat-card-content>
+                    <i class="material-symbols-outlined text-primary" style="font-size: 32px;">groups</i>
+                    <h4 class="mt-2 mb-1">{{ getTotalTeamsCount() }}</h4>
+                    <p class="text-muted mb-0">Total de Equipes</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        
+        <div class="col-md-3">
+            <mat-card class="daxa-card stats-card text-center border-radius bg-white border-none">
+                <mat-card-content>
+                    <i class="material-symbols-outlined text-success" style="font-size: 32px;">check_circle</i>
+                    <h4 class="mt-2 mb-1">{{ getActiveTeamsCount() }}</h4>
+                    <p class="text-muted mb-0">Equipes Ativas</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        
+        <div class="col-md-3">
+            <mat-card class="daxa-card stats-card text-center border-radius bg-white border-none">
+                <mat-card-content>
+                    <i class="material-symbols-outlined text-warning" style="font-size: 32px;">cancel</i>
+                    <h4 class="mt-2 mb-1">{{ getInactiveTeamsCount() }}</h4>
+                    <p class="text-muted mb-0">Equipes Inativas</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        
+        <div class="col-md-3">
+            <mat-card class="daxa-card stats-card text-center border-radius bg-white border-none">
+                <mat-card-content>
+                    <i class="material-symbols-outlined text-info" style="font-size: 32px;">people</i>
+                    <h4 class="mt-2 mb-1">{{ getTotalAgentsCount() }}</h4>
+                    <p class="text-muted mb-0">Total de Agentes</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

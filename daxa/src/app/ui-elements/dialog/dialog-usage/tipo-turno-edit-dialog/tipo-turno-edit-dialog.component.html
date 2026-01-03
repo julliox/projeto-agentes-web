@@ -1,0 +1,65 @@
+<h1 mat-dialog-title>Editar Tipo de Turno</h1>
+<div mat-dialog-content>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Descrição</mat-label>
+                <input matInput formControlName="descricao" required>
+                <mat-error *ngIf="editForm.get('descricao')?.hasError('required')">
+                    Descrição é obrigatória
+                </mat-error>
+                <mat-error *ngIf="editForm.get('descricao')?.hasError('maxlength')">
+                    Descrição não pode exceder 100 caracteres
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Cod</mat-label>
+                <input matInput formControlName="cod" required>
+                <mat-error *ngIf="editForm.get('cod')?.hasError('required')">
+                    Descrição é obrigatória
+                </mat-error>
+                <mat-error *ngIf="editForm.get('cod')?.hasError('maxlength')">
+                    Codigo não pode exceder 3 caracteres
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Valor Junior ($)</mat-label>
+                <input matInput type="number" formControlName="valorJunior" required min="0">
+                <mat-error *ngIf="editForm.get('valorJunior')?.hasError('required')">
+                    Valor Junior é obrigatório
+                </mat-error>
+                <mat-error *ngIf="editForm.get('valorJunior')?.hasError('min')">
+                    Valor Junior deve ser positivo
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Valor Senior ($)</mat-label>
+                <input matInput type="number" formControlName="valorSenior" required min="0">
+                <mat-error *ngIf="editForm.get('valorSenior')?.hasError('required')">
+                    Valor Senior é obrigatório
+                </mat-error>
+                <mat-error *ngIf="editForm.get('valorSenior')?.hasError('min')">
+                    Valor Senior deve ser positivo
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid">
+                Atualizar
+            </button>
+            <button mat-button type="button" (click)="onCancel()" color="warn">
+                Cancelar
+            </button>
+        </div>
+    </form>
+</div>

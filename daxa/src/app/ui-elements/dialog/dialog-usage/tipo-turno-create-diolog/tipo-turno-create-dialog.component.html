@@ -1,0 +1,67 @@
+<div class="dialog-container">
+    <h2 mat-dialog-title class="dialog-title">
+        <mat-icon class="title-icon">add_circle</mat-icon>
+        Criar Tipo de Turno
+    </h2>
+    
+    <div mat-dialog-content class="dialog-content">
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Descrição</mat-label>
+                <input matInput formControlName="descricao" required maxlength="100">
+                <mat-error *ngIf="createForm.get('descricao')?.hasError('required') && createForm.get('descricao')?.touched">
+                    Descrição é obrigatória
+                </mat-error>
+                <mat-error *ngIf="createForm.get('descricao')?.hasError('maxlength') && createForm.get('descricao')?.touched">
+                    Descrição não pode exceder 100 caracteres
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Código</mat-label>
+                <input matInput formControlName="cod" required maxlength="3">
+                <mat-error *ngIf="createForm.get('cod')?.hasError('required') && createForm.get('cod')?.touched">
+                    Código é obrigatório
+                </mat-error>
+                <mat-error *ngIf="createForm.get('cod')?.hasError('maxlength') && createForm.get('cod')?.touched">
+                    Código não pode exceder 3 caracteres
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Valor Junior ($)</mat-label>
+                <input matInput type="number" formControlName="valorJunior" required min="0" step="0.01">
+                <mat-hint>Valor para agentes com menos de 1 ano na empresa</mat-hint>
+                <mat-error *ngIf="createForm.get('valorJunior')?.hasError('required') && createForm.get('valorJunior')?.touched">
+                    Valor Junior é obrigatório
+                </mat-error>
+                <mat-error *ngIf="createForm.get('valorJunior')?.hasError('min') && createForm.get('valorJunior')?.touched">
+                    Valor Junior deve ser positivo
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Valor Senior ($)</mat-label>
+                <input matInput type="number" formControlName="valorSenior" required min="0" step="0.01">
+                <mat-hint>Valor para agentes com mais de 1 ano na empresa</mat-hint>
+                <mat-error *ngIf="createForm.get('valorSenior')?.hasError('required') && createForm.get('valorSenior')?.touched">
+                    Valor Senior é obrigatório
+                </mat-error>
+                <mat-error *ngIf="createForm.get('valorSenior')?.hasError('min') && createForm.get('valorSenior')?.touched">
+                    Valor Senior deve ser positivo
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+    
+    <div mat-dialog-actions class="dialog-actions">
+        <button mat-stroked-button type="button" (click)="onCancel()" class="cancel-button">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="createForm.invalid" (click)="onSubmit()" class="submit-button">
+            <mat-icon>save</mat-icon>
+            Criar
+        </button>
+    </div>
+</div>

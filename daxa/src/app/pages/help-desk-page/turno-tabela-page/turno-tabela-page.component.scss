@@ -1,0 +1,268 @@
+/* turno-tabela-page.component.scss */
+
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            .mat-mdc-card-header {
+                .mat-mdc-card-subtitle {
+                    .header-controls {
+                        display: flex;
+                        align-items: center;
+                        gap: 16px;
+                        flex-wrap: nowrap;
+                        margin-top: 8px;
+                        width: 100%;
+                        justify-content: flex-start;
+
+                        /* Seletor de Mês */
+                        .mes-selector {
+                            flex: 0 0 auto;
+                            min-width: 200px;
+                            max-width: 250px;
+
+                            .mat-mdc-form-field {
+                                width: 100%;
+                            }
+                        }
+
+                        /* Botões */
+                        .btn-gerar-relatorio,
+                        .btn-escolher-arquivo {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                            white-space: nowrap;
+                            font-weight: 500;
+                            transition: all 0.3s ease;
+                            flex-shrink: 0;
+                            min-width: fit-content;
+
+                            mat-icon {
+                                font-size: 18px;
+                                width: 18px;
+                                height: 18px;
+                            }
+
+                            &:hover {
+                                transform: translateY(-1px);
+                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                            }
+
+                            &:active {
+                                transform: translateY(0);
+                            }
+                        }
+
+                        /* Responsividade */
+                        @media (max-width: 768px) {
+                            flex-direction: column;
+                            align-items: stretch;
+                            gap: 12px;
+                            flex-wrap: wrap;
+
+                            .mes-selector {
+                                min-width: 100%;
+                                max-width: none;
+                            }
+
+                            .btn-gerar-relatorio,
+                            .btn-escolher-arquivo {
+                                width: 100%;
+                                justify-content: center;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .mat-mdc-card-content {
+                .table-responsive {
+                    overflow-x: auto;
+                    max-height: 600px; /* Define uma altura máxima para permitir rolagem vertical */
+                    overflow-y: auto;
+                    position: relative; /* Necessário para posicionamento sticky funcionar corretamente */
+
+                    .custom-table {
+                        width: 100%;
+                        border-collapse: separate; /* Use collapse para melhor comportamento */
+
+                        th,
+                        td {
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                            text-align: center;
+                            padding: 8px;
+                            min-width: 80px;
+                            background-clip: padding-box; /* Evita que o fundo ultrapasse o padding */
+                        }
+
+                        th {
+                            position: sticky;
+                            top: 0;
+                            background-color: var(--daxaColor);
+                            color: var(--whiteColor);
+                            z-index: 3; /* Superior aos td:first-child */
+                        }
+
+                        th:first-child {
+                            position: sticky;
+                            top: 0;
+                            left: 0;
+                            background-color: var(--daxaColor);
+                            color: var(--whiteColor);
+                            z-index: 4; /* Maior que todos */
+                        }
+
+                        td:first-child {
+                            position: sticky;
+                            left: 0;
+                            background-color: var(--daxaColor);
+                            color: var(--whiteColor);
+                            z-index: 2;
+                            box-shadow: 2px 0 5px -2px rgba(0, 0, 0, 0.3); /* Sombra para separação */
+                        }
+
+                        tr:nth-child(even) td {
+                            background-color: #f8f9fa; /* Cor clara para modo light */
+                        }
+
+                        td:hover {
+                            background-color: #e9ecef; /* Cor clara para hover no modo light */
+                        }
+
+                        /* Estilos para os retângulos dos turnos */
+                        .turno-diurno {
+                            display: inline-block;
+                            background-color: #00bcd4; /* Azul ciano */
+                            color: #ffffff;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            font-weight: bold;
+                        }
+
+                        .turno-noturno {
+                            display: inline-block;
+                            background-color: #303f9f; /* Azul escuro */
+                            color: #ffffff;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            font-weight: bold;
+                        }
+
+                        /* Estilos para o drag-and-drop */
+                        .drag-handle {
+                            cursor: grab; /* Cursor que indica que pode arrastar */
+                            display: inline-flex;
+                            align-items: center;
+                            margin-right: 8px; /* Espaçamento entre o handle e o nome do agente */
+
+                            &:active {
+                                cursor: grabbing; /* Cursor durante o arrasto */
+                            }
+
+                            mat-icon {
+                                color: var(--whiteColor);
+                            }
+                        }
+
+                        /* Estilos para a célula do agente */
+                        .agente-cell {
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-start;
+                        }
+
+                        /* Estilos para o nome do agente */
+                        .agente-nome {
+                            font-size: 14px; /* Tamanho menor para o nome do agente */
+                            white-space: nowrap; /* Impede quebra de linha */
+                            overflow: hidden;
+                            text-overflow: ellipsis; /* Adiciona reticências se o texto for muito longo */
+                            color: var(--blackColor);
+                        }
+                    }
+                }
+
+                /* Estilo para a mensagem de erro */
+                .error-message {
+                    color: red;
+                    text-align: center;
+                }
+
+                /* Loading spinner */
+                .loading-spinner {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 20px;
+                }
+            }
+
+            /* Dark theme adjustments */
+            &.component-dark-theme {
+                .mat-mdc-card-header {
+                    .mat-mdc-card-subtitle {
+                        .header-controls {
+                            .btn-gerar-relatorio,
+                            .btn-escolher-arquivo {
+                                &:hover {
+                                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .mat-mdc-card-content {
+                    .table-responsive {
+                        .custom-table {
+                            th,
+                            th:first-child {
+                                background-color: #1b232d;
+                                color: var(--whiteColor);
+                            }
+
+                            td:first-child {
+                                background-color: #1b232d;
+                                color: var(--whiteColor);
+                            }
+
+                            tr:nth-child(even) td {
+                                background-color: #1b232d; /* Cor escura para modo dark */
+                            }
+
+                            td:hover {
+                                background-color: #2c343e; /* Cor escura para hover no modo dark */
+                            }
+
+                            td {
+                                border-color: rgba(255, 255, 255, 0.1);
+                            }
+
+                            th {
+                                border-color: rgba(255, 255, 255, 0.1);
+                            }
+                            .agente-nome {
+                                color: var(--whiteColor);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Drag and drop animations */
+tr[cdkDrag].cdk-drag-preview {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 4px;
+}
+
+tr[cdkDrag].cdk-drag-placeholder {
+    opacity: 0;
+}
+
+tr[cdkDrag].cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

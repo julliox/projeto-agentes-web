@@ -1,0 +1,142 @@
+<div class="login-test-container">
+    <mat-card class="daxa-card">
+        <mat-card-header>
+            <mat-card-title>
+                <h5 class="mb-0">Teste do Sistema de Alert - Login</h5>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p class="mb-4">
+                Este componente demonstra como o novo sistema de alert funciona no contexto de login.
+                Os alerts aparecem no topo da tela à direita e são específicos para cenários de autenticação.
+            </p>
+            
+            <div class="button-grid">
+                <h6 class="section-title">Cenários de Sucesso</h6>
+                <button 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="testSuccessfulLogin()"
+                    class="test-button"
+                >
+                    <i class="ri-check-line"></i>
+                    Login Bem-sucedido
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="testPasswordReset()"
+                    class="test-button"
+                >
+                    <i class="ri-mail-send-line"></i>
+                    Reset de Senha
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="testAccountCreated()"
+                    class="test-button"
+                >
+                    <i class="ri-user-add-line"></i>
+                    Conta Criada
+                </button>
+                
+                <h6 class="section-title">Cenários de Erro</h6>
+                <button 
+                    mat-raised-button 
+                    color="warn" 
+                    (click)="testInvalidCredentials()"
+                    class="test-button"
+                >
+                    <i class="ri-error-warning-line"></i>
+                    Credenciais Inválidas
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="warn" 
+                    (click)="testAccountDisabled()"
+                    class="test-button"
+                >
+                    <i class="ri-lock-line"></i>
+                    Conta Desativada
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="warn" 
+                    (click)="testUserNotFound()"
+                    class="test-button"
+                >
+                    <i class="ri-user-search-line"></i>
+                    Usuário Não Encontrado
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="warn" 
+                    (click)="testServerError()"
+                    class="test-button"
+                >
+                    <i class="ri-server-line"></i>
+                    Erro do Servidor
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="warn" 
+                    (click)="testConnectionError()"
+                    class="test-button"
+                >
+                    <i class="ri-wifi-off-line"></i>
+                    Erro de Conexão
+                </button>
+                
+                <h6 class="section-title">Cenários de Aviso</h6>
+                <button 
+                    mat-raised-button 
+                    color="accent" 
+                    (click)="testValidationError()"
+                    class="test-button"
+                >
+                    <i class="ri-alert-line"></i>
+                    Erro de Validação
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="accent" 
+                    (click)="testSessionExpired()"
+                    class="test-button"
+                >
+                    <i class="ri-time-line"></i>
+                    Sessão Expirada
+                </button>
+                
+                <h6 class="section-title">Cenários de Informação</h6>
+                <button 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="testMaintenanceMode()"
+                    class="test-button"
+                >
+                    <i class="ri-tools-line"></i>
+                    Modo Manutenção
+                </button>
+                
+                <h6 class="section-title">Fluxo Completo</h6>
+                <button 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="simulateLoginFlow()"
+                    class="test-button flow-button"
+                >
+                    <i class="ri-play-circle-line"></i>
+                    Simular Fluxo Completo
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div> 

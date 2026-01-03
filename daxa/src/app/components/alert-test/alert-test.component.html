@@ -1,0 +1,97 @@
+<div class="alert-test-container">
+    <mat-card class="daxa-card">
+        <mat-card-header>
+            <mat-card-title>
+                <h5 class="mb-0">Teste do Sistema de Alert</h5>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p class="mb-4">
+                Este componente demonstra o novo sistema de alert baseado no template Daxa.
+                Os alerts aparecem no topo da tela à direita.
+            </p>
+            
+            <div class="button-grid">
+                <button 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="testSuccessAlert()"
+                    class="test-button"
+                >
+                    <i class="ri-check-line"></i>
+                    Testar Success Alert
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="warn" 
+                    (click)="testErrorAlert()"
+                    class="test-button"
+                >
+                    <i class="ri-error-warning-line"></i>
+                    Testar Error Alert
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="accent" 
+                    (click)="testWarningAlert()"
+                    class="test-button"
+                >
+                    <i class="ri-alert-line"></i>
+                    Testar Warning Alert
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="testInfoAlert()"
+                    class="test-button"
+                >
+                    <i class="ri-information-line"></i>
+                    Testar Info Alert
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="testLongAlert()"
+                    class="test-button"
+                >
+                    <i class="ri-time-line"></i>
+                    Alert Longo (10s)
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="accent" 
+                    (click)="testPersistentAlert()"
+                    class="test-button"
+                >
+                    <i class="ri-lock-line"></i>
+                    Alert Persistente
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="warn" 
+                    (click)="testNonDismissibleAlert()"
+                    class="test-button"
+                >
+                    <i class="ri-close-circle-line"></i>
+                    Alert Não Fechável
+                </button>
+                
+                <button 
+                    mat-raised-button 
+                    color="basic" 
+                    (click)="clearAllAlerts()"
+                    class="test-button"
+                >
+                    <i class="ri-delete-bin-line"></i>
+                    Limpar Todos
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div> 

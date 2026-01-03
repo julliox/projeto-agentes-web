@@ -1,0 +1,419 @@
+// Turnos Calendar Component Styles
+
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            &.turnos-calendar-card {
+                .mat-mdc-card-content {
+                    .loading-container {
+                        .mat-spinner {
+                            margin: 0 auto;
+                        }
+                        
+                        p {
+                            color: var(--bodyColor);
+                            font-size: 14px;
+                        }
+                    }
+
+                    .calendar-wrapper {
+                        margin-bottom: 20px;
+                    }
+
+                    // Legenda
+                    .legend-container {
+                        padding-top: 20px;
+                        border-top: 1px solid #e9ecef;
+
+                        .legend-title {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                            color: var(--blackColor);
+                            font-weight: 600;
+                            font-size: 16px;
+
+                            i {
+                                color: var(--primaryColor);
+                                font-size: 20px;
+                            }
+                        }
+
+                        .legend-items {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 20px;
+
+                            .legend-item {
+                                display: flex;
+                                align-items: center;
+                                gap: 8px;
+
+                                .legend-color {
+                                    width: 20px;
+                                    height: 20px;
+                                    border-radius: 4px;
+                                    display: inline-block;
+                                }
+
+                                .legend-label {
+                                    color: var(--blackColor);
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Dark theme
+                &.component-dark-theme {
+                    .mat-mdc-card-content {
+                        .legend-container {
+                            border-top-color: rgba(255, 255, 255, 0.1);
+
+                            .legend-title {
+                                color: var(--whiteColor);
+                            }
+
+                            .legend-items {
+                                .legend-item {
+                                    .legend-label {
+                                        color: var(--whiteColor);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Estilos do FullCalendar
+    .mat-mdc-card {
+        &.daxa-card {
+            &.turnos-calendar-card {
+                .mat-mdc-card-content {
+                    .fc {
+                        --fc-small-font-size: 14px;
+                        --fc-border-color: #eeeeee;
+                        
+                        .fc-header-toolbar {
+                            margin-bottom: 20px;
+                            
+                            .fc-toolbar-title {
+                                font-size: 18px;
+                                color: var(--blackColor);
+                                font-weight: 600;
+                            }
+                            
+                            .fc-button-group {
+                                .fc-button {
+                                    padding: 0;
+                                    width: 40px;
+                                    height: 40px;
+                                    box-shadow: unset;
+                                    border-radius: 3px;
+                                    display: inline-block;
+                                    color: var(--blackColor);
+                                    border: 1px solid #dae0ec;
+                                    background-color: transparent;
+                                    transition: var(--transition);
+                                    margin: {
+                                        left: 5px;
+                                        right: 5px;
+                                    };
+                                    
+                                    .fc-icon {
+                                        position: relative;
+                                        top: -.6px;
+                                    }
+                                    
+                                    &:hover {
+                                        color: var(--whiteColor);
+                                        border-color: var(--daxaColor);
+                                        background-color: var(--daxaColor);
+                                    }
+                                    
+                                    &:first-child {
+                                        margin-left: 0;
+                                    }
+                                    
+                                    &:last-child {
+                                        margin-right: 0;
+                                    }
+                                }
+                            }
+                            
+                            .fc-today-button {
+                                transition: var(--transition);
+                                background-color: #eff3f9;
+                                text-transform: capitalize;
+                                color: var(--blackColor);
+                                border-color: #eff3f9;
+                                box-shadow: unset;
+                                height: 40px;
+                                padding: {
+                                    left: 20px;
+                                    right: 20px;
+                                };
+                                
+                                &:hover {
+                                    color: var(--whiteColor);
+                                    border-color: var(--daxaColor);
+                                    background-color: var(--daxaColor);
+                                }
+                                
+                                &:disabled {
+                                    background-color: #f9f9f9;
+                                    border-color: #f9f9f9;
+                                    color: var(--bodyColor);
+                                }
+                            }
+                        }
+                        
+                        .fc-scrollgrid-section-header {
+                            .fc-col-header-cell-cushion {
+                                padding: 15px;
+                                color: var(--blackColor);
+                                font-weight: 500;
+                            }
+                            
+                            .fc-col-header-cell {
+                                background-color: #e7effd;
+                                font-weight: 500;
+                                border: 0;
+                            }
+                        }
+                        
+                        .fc-daygrid-body {
+                            .fc-daygrid-day-number {
+                                padding: 10px;
+                                color: var(--blackColor);
+                            }
+                            
+                            .fc-h-event {
+                                padding: 4px 6px;
+                                margin: 2px;
+                                border-radius: 4px;
+                                font-size: 12px;
+                                cursor: pointer;
+                                transition: all 0.2s ease;
+
+                                .fc-event-title {
+                                    white-space: break-spaces;
+                                    font-weight: 500;
+                                }
+
+                                &:hover {
+                                    transform: translateY(-1px);
+                                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                                }
+                            }
+                            
+                            .fc-daygrid-more-link {
+                                transition: var(--transition);
+                                background-color: #e7effd;
+                                color: var(--blackColor);
+                                
+                                &:hover {
+                                    color: var(--whiteColor);
+                                    background-color: var(--daxaColor);
+                                }
+                            }
+                        }
+                        
+                        .fc-popover {
+                            border: 0;
+                            color: var(--blackColor);
+                            background-color: var(--whiteColor);
+                            box-shadow: 0px 4px 34px rgba(101, 96, 240, 0.1);
+
+                            .fc-popover-header {
+                                padding: 8px 10px;
+                                background-color: #e7effd;
+                            }
+                            
+                            .fc-event-title {
+                                padding: 4px;
+                            }
+                        }
+                    }
+                }
+                
+                // Dark theme para FullCalendar
+                &.component-dark-theme {
+                    .mat-mdc-card-content {
+                        .fc {
+                            --fc-border-color: rgba(255, 255, 255, 0.09);
+                            
+                            .fc-header-toolbar {
+                                .fc-toolbar-title {
+                                    color: var(--whiteColor);
+                                }
+                                
+                                .fc-button-group {
+                                    .fc-button {
+                                        color: var(--whiteColor);
+                                        border-color: rgba(255, 255, 255, 0.09);
+
+                                        &:hover {
+                                            border-color: var(--daxaColor);
+                                        }
+                                    }
+                                }
+                                
+                                .fc-today-button {
+                                    background-color: rgba(255, 255, 255, 0.09);
+                                    border-color: rgba(255, 255, 255, 0.09);
+                                    color: var(--whiteColor);
+                                    
+                                    &:hover {
+                                        border-color: var(--daxaColor);
+                                        background-color: var(--daxaColor);
+                                    }
+                                    
+                                    &:disabled {
+                                        background-color: var(--blackColor);
+                                        color: rgba(255, 255, 255, .50);
+                                        border-color: var(--blackColor);
+                                    }
+                                }
+                            }
+                            
+                            .fc-scrollgrid-section-header {
+                                .fc-col-header-cell-cushion {
+                                    color: var(--whiteColor);
+                                }
+                                
+                                .fc-col-header-cell {
+                                    background-color: #131920;
+                                }
+                            }
+                            
+                            .fc-daygrid-body {
+                                .fc-daygrid-day-number {
+                                    color: var(--whiteColor);
+                                }
+                                
+                                .fc-daygrid-more-link {
+                                    background-color: rgba(255, 255, 255, 0.09);
+                                    color: var(--whiteColor);
+                                    
+                                    &:hover {
+                                        color: var(--whiteColor);
+                                        background-color: var(--daxaColor);
+                                    }
+                                }
+                            }
+                            
+                            .fc-popover {
+                                color: var(--whiteColor);
+                                background-color: var(--blackColor);
+                                box-shadow: 0px 4px 34px rgba(101, 96, 240, 0.1);
+    
+                                .fc-popover-header {
+                                    background-color: rgba(255, 255, 255, 0.09);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Cards de Estatísticas
+.stats-card {
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    mat-card-content {
+        padding: 20px;
+        
+        i {
+            color: var(--primaryColor);
+            margin-bottom: 10px;
+        }
+        
+        h4 {
+            color: var(--blackColor);
+            font-weight: 600;
+            margin: 10px 0 5px 0;
+        }
+        
+        p {
+            color: var(--bodyColor);
+            font-size: 14px;
+            margin: 0;
+        }
+    }
+}
+
+// Dark theme para cards de estatísticas
+.dark-theme {
+    .stats-card {
+        background-color: #2a2f38 !important;
+        
+        mat-card-content {
+            h4 {
+                color: var(--whiteColor);
+            }
+        }
+    }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+    .legend-items {
+        flex-direction: column;
+        gap: 12px !important;
+    }
+
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                &.turnos-calendar-card {
+                    .mat-mdc-card-content {
+                        .fc {
+                            .fc-header-toolbar {
+                                margin-bottom: 15px;
+                                display: block;
+                                
+                                .fc-toolbar-title {
+                                    font-size: 16px;
+                                    margin-bottom: 12px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Animações
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.turnos-calendar-card,
+.stats-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+

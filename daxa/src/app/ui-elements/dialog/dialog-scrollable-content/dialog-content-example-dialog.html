@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>
+    Install Angular
+</h2>
+<mat-dialog-content class="mat-typography">
+    <p> DESEJA EXCLUIR ESSE AGENTE?</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button color="warn" mat-dialog-close>
+        NAO
+    </button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>
+        SIM
+    </button>
+</mat-dialog-actions>

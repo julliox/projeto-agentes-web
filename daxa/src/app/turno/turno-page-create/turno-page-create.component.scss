@@ -1,0 +1,224 @@
+/* turno-page-create.component.scss */
+
+::ng-deep {
+    .mat-mdc-card {
+        &.daxa-card {
+            .mat-mdc-card-content {
+                /* Formulário */
+                form {
+                    .form-row {
+                        display: flex;
+                        gap: 20px;
+                        margin-bottom: 20px;
+
+                        .form-field {
+                            flex: 1;
+                            min-width: 0;
+                        }
+
+                        @media (max-width: 768px) {
+                            flex-direction: column;
+                            gap: 16px;
+                        }
+                    }
+
+                    /* Container de Datas */
+                    .data-turno-container {
+                        margin-bottom: 20px;
+
+                        .data-turno-group {
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            margin-bottom: 16px;
+
+                            .date-field {
+                                flex: 1;
+                                min-width: 0;
+                            }
+
+                            .remove-button {
+                                flex-shrink: 0;
+                                margin-left: 8px;
+
+                                &:disabled {
+                                    opacity: 0.5;
+                                }
+                            }
+
+                            @media (max-width: 768px) {
+                                flex-direction: column;
+                                align-items: stretch;
+                                gap: 8px;
+
+                                .remove-button {
+                                    align-self: flex-end;
+                                    margin-left: 0;
+                                }
+                            }
+                        }
+                    }
+
+                    /* Botão Adicionar Data */
+                    .add-button-container {
+                        margin-bottom: 24px;
+                        display: flex;
+                        justify-content: flex-start;
+
+                        button {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                            transition: all 0.3s ease;
+
+                            mat-icon {
+                                font-size: 18px;
+                                width: 18px;
+                                height: 18px;
+                            }
+
+                            &:hover {
+                                transform: translateY(-1px);
+                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                            }
+                        }
+                    }
+
+                    /* Botão de Submissão */
+                    .submit-button-container {
+                        display: flex;
+                        justify-content: flex-end;
+                        margin-bottom: 20px;
+
+                        button {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                            padding: 12px 24px;
+                            transition: all 0.3s ease;
+
+                            mat-icon {
+                                font-size: 18px;
+                                width: 18px;
+                                height: 18px;
+                            }
+
+                            &:hover {
+                                transform: translateY(-1px);
+                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                            }
+
+                            &:disabled {
+                                opacity: 0.6;
+                                transform: none;
+                                box-shadow: none;
+                            }
+                        }
+                    }
+                }
+
+                /* Mensagens */
+                .success-message {
+                    color: #28a745;
+                    background-color: #d4edda;
+                    border: 1px solid #c3e6cb;
+                    border-radius: 6px;
+                    padding: 12px 16px;
+                    margin-bottom: 20px;
+                    font-weight: 500;
+                    text-align: center;
+                }
+
+                .error-message {
+                    color: #dc3545;
+                    background-color: #f8d7da;
+                    border: 1px solid #f5c6cb;
+                    border-radius: 6px;
+                    padding: 12px 16px;
+                    margin-bottom: 20px;
+                    font-weight: 500;
+                    text-align: center;
+                }
+
+                /* Calendário */
+                .calendar-container {
+                    margin-top: 30px;
+                    padding-top: 20px;
+                    border-top: 1px solid #e9ecef;
+
+                    .calendar-title {
+                        margin-bottom: 16px;
+                        font-weight: 600;
+                        color: var(--daxaColor);
+                    }
+
+                    full-calendar {
+                        border-radius: 8px;
+                        overflow: hidden;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                    }
+                }
+            }
+
+            /* Dark theme adjustments */
+            &.component-dark-theme {
+                .mat-mdc-card-content {
+                    .success-message {
+                        background-color: #1e3a2e;
+                        border-color: #2d5a3d;
+                        color: #75b798;
+                    }
+
+                    .error-message {
+                        background-color: #3a1e1e;
+                        border-color: #5a2d2d;
+                        color: #b77575;
+                    }
+
+                    .calendar-container {
+                        border-top-color: rgba(255, 255, 255, 0.1);
+
+                        .calendar-title {
+                            color: var(--whiteColor);
+                        }
+
+                        full-calendar {
+                            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Responsividade geral */
+@media (max-width: 768px) {
+    ::ng-deep {
+        .mat-mdc-card {
+            &.daxa-card {
+                .mat-mdc-card-content {
+                    form {
+                        .submit-button-container {
+                            justify-content: center;
+
+                            button {
+                                width: 100%;
+                                justify-content: center;
+                            }
+                        }
+
+                        .add-button-container {
+                            justify-content: center;
+
+                            button {
+                                width: 100%;
+                                justify-content: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

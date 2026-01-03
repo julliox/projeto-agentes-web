@@ -1,0 +1,77 @@
+<!-- src/app/components/hd-agents/hd-agents.component.html -->
+
+<mat-card
+    class="daxa-card performance-of-agents-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Agents
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <!-- Indicador de carregamento -->
+        <div *ngIf="isLoading" class="loading-container">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+
+        <!-- Mensagem de erro -->
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+
+        <!-- Tabela de agentes -->
+        <div class="performance-of-agents-table" *ngIf="!isLoading && !errorMessage">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                    <!-- Nome Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Nome </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <!-- Email Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef> Email </th>
+                        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef> Status </th>
+                        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                    </ng-container>
+
+                    <!-- Actions Column -->
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef style="padding-right: 45px"> Ações </th>
+                        <td mat-cell *matCellDef="let element">
+                            <!-- Botão para Visualizar Turnos -->
+                            <button mat-icon-button color="primary" (click)="viewTurnos(element.id)">
+                                <span class="material-symbols-outlined">event</span>
+                            </button>
+                            <!-- Botão para Editar Agente -->
+                            <button mat-icon-button color="accent" (click)="editAgent(element.id)">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+
+                            <button mat-icon-button (click)="viewAgent(element.id)">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <!-- Header and Row Definitions -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+            <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,640 @@
+.teams-page-container {
+    padding: 20px;
+
+    .page-header {
+        .page-title {
+            h3 {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: var(--blackColor);
+                font-weight: 600;
+
+                i {
+                    color: var(--primaryColor);
+                    font-size: 28px;
+                }
+            }
+
+            p {
+                color: var(--bodyColor);
+                font-size: 14px;
+            }
+        }
+    }
+
+    // Formulário de Equipe
+    .team-form-card {
+        .team-form {
+            .agent-option {
+                display: flex;
+                flex-direction: column;
+
+                .agent-name {
+                    font-weight: 500;
+                    color: var(--blackColor);
+                }
+
+                .agent-email {
+                    font-size: 12px;
+                    color: var(--bodyColor);
+                }
+            }
+        }
+    }
+
+    // Tabela de Equipes
+    .teams-table-card {
+        .filters-container {
+            .row {
+                align-items: end;
+            }
+
+            mat-form-field {
+                margin-bottom: 0;
+
+                .searching-indicator {
+                    color: var(--primaryColor);
+                    animation: pulse 1.5s ease-in-out infinite;
+                }
+            }
+        }
+
+        .loading-container {
+            .mat-spinner {
+                margin: 0 auto;
+            }
+        }
+
+        .table-responsive {
+            table {
+                th.mat-header-cell {
+                    background-color: #f8f9fa;
+                    color: var(--blackColor);
+                    font-weight: 600;
+                    border-bottom: 2px solid #dee2e6;
+
+                    &.mat-sort-header {
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: #e9ecef;
+                        }
+                    }
+                }
+
+                td.mat-cell {
+                    padding: 16px 8px;
+                    border-bottom: 1px solid #f0f0f0;
+                    vertical-align: middle;
+                }
+
+                tr.mat-row {
+                    &:hover {
+                        background-color: #f8f9fa;
+                    }
+                }
+
+                .team-name {
+                    strong {
+                        color: var(--blackColor);
+                        font-weight: 600;
+                    }
+
+                    small {
+                        font-size: 11px;
+                        color: var(--bodyColor);
+                    }
+                }
+
+                .work-time {
+                    display: flex;
+                    align-items: center;
+                    color: var(--primaryColor);
+                    font-weight: 500;
+
+                    i {
+                        font-size: 18px;
+                    }
+                }
+
+                .agents-count {
+                    text-align: center;
+
+                    .badge-container {
+                        position: relative;
+                        display: inline-block;
+                        margin-bottom: 5px;
+
+                        .badge {
+                            position: absolute;
+                            top: -8px;
+                            right: -8px;
+                            min-width: 18px;
+                            height: 18px;
+                            border-radius: 9px;
+                            font-size: 10px;
+                            font-weight: 600;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 0 4px;
+
+                            &.bg-primary {
+                                background-color: var(--primaryColor) !important;
+                                color: white;
+                            }
+                        }
+                    }
+
+                    i {
+                        font-size: 20px;
+                        color: var(--infoColor);
+                    }
+
+                    small {
+                        font-size: 11px;
+                        color: var(--bodyColor);
+                    }
+                }
+
+                .status-badge {
+                    padding: 4px 8px;
+                    border-radius: 12px;
+                    font-size: 11px;
+                    font-weight: 500;
+                    text-transform: uppercase;
+
+                    &.status-active {
+                        background-color: var(--successColor);
+                        color: white;
+                    }
+
+                    &.status-inactive {
+                        background-color: var(--warningColor);
+                        color: white;
+                    }
+                }
+
+                .created-date {
+                    display: flex;
+                    align-items: center;
+                    color: var(--bodyColor);
+                    font-size: 12px;
+
+                    i {
+                        font-size: 16px;
+                    }
+                }
+
+                .actions-buttons {
+                    display: flex;
+                    gap: 8px;
+                    justify-content: center;
+
+                    .btn-edit {
+                        color: var(--infoColor);
+
+                        &:hover {
+                            background-color: rgba(0, 202, 227, 0.1);
+                        }
+                    }
+
+                    .btn-delete {
+                        color: var(--dangerColor);
+
+                        &:hover {
+                            background-color: rgba(231, 76, 60, 0.1);
+                        }
+                    }
+                }
+            }
+
+            .no-data {
+                i {
+                    color: var(--bodyColor);
+                }
+
+                h6 {
+                    color: var(--blackColor);
+                    font-weight: 500;
+                }
+
+                p {
+                    color: var(--bodyColor);
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+
+    // Cards de Estatísticas
+    .stats-card {
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        mat-card-content {
+            padding: 20px;
+
+            i {
+                color: var(--primaryColor);
+                margin-bottom: 10px;
+            }
+
+            h4 {
+                color: var(--blackColor);
+                font-weight: 600;
+                margin: 10px 0 5px 0;
+            }
+
+            p {
+                color: var(--bodyColor);
+                font-size: 14px;
+                margin: 0;
+            }
+        }
+    }
+
+    // Botões
+    .btn-primary {
+        background-color: var(--primaryColor);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+
+        &:hover:not(:disabled) {
+            background-color: darken(#796df6, 10%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(119, 109, 246, 0.3);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+
+    .btn-secondary {
+        background-color: transparent;
+        color: var(--bodyColor);
+        border: 1px solid #dee2e6;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+
+        &:hover:not(:disabled) {
+            background-color: #f8f9fa;
+            border-color: var(--bodyColor);
+        }
+    }
+
+    // Badges
+    .badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+
+        &.bg-info {
+            background-color: var(--infoColor) !important;
+            color: white;
+        }
+
+        &.bg-primary {
+            background-color: var(--primaryColor) !important;
+            color: white;
+        }
+    }
+
+    // Responsividade
+    @media (max-width: 768px) {
+        padding: 15px;
+
+        .page-header {
+            .row {
+                .col-lg-6.text-end {
+                    text-align: left !important;
+                    margin-top: 15px;
+                }
+            }
+        }
+
+        .team-form-card {
+            .team-form {
+                .row {
+                    .col-md-6,
+                    .col-md-3 {
+                        margin-bottom: 15px;
+                    }
+                }
+            }
+        }
+
+        .teams-table-card {
+            .table-responsive {
+                overflow-x: auto;
+
+                table {
+                    min-width: 800px;
+                }
+            }
+        }
+
+        .stats-card {
+            margin-bottom: 15px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        padding: 10px;
+
+        .page-header {
+            .page-title {
+                h3 {
+                    font-size: 20px;
+
+                    i {
+                        font-size: 24px;
+                    }
+                }
+            }
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+// Dark Theme
+.dark-theme {
+    .teams-page-container {
+        .page-header {
+            .page-title {
+                h3 {
+                    color: var(--whiteColor);
+                }
+            }
+        }
+
+        .teams-table-card {
+            .table-responsive {
+                table {
+                    th.mat-header-cell {
+                        background-color: #2a2f38;
+                        color: var(--whiteColor);
+                        border-bottom-color: #404040;
+
+                        &:hover {
+                            background-color: #3a3f48;
+                        }
+                    }
+
+                    td.mat-cell {
+                        border-bottom-color: #404040;
+                    }
+
+                    tr.mat-row {
+                        &:hover {
+                            background-color: #2a2f38;
+                        }
+                    }
+                }
+            }
+        }
+
+        .stats-card {
+            background-color: #2a2f38 !important;
+
+            mat-card-content {
+                h4 {
+                    color: var(--whiteColor);
+                }
+            }
+        }
+    }
+}
+
+// RTL Support
+.rtl-enabled {
+    .teams-page-container {
+        .page-header {
+            .row {
+                .col-lg-6.text-end {
+                    text-align: left !important;
+                }
+            }
+        }
+
+        .actions-buttons {
+            flex-direction: row-reverse;
+        }
+
+        .work-time,
+        .created-date {
+            flex-direction: row-reverse;
+        }
+    }
+}
+
+// Animações
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.team-form-card,
+.teams-table-card,
+.stats-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+// Transições suaves para mudanças de status
+.status-badge {
+    transition: all 0.3s ease;
+
+    &.status-active {
+        background-color: var(--successColor);
+        color: white;
+        transform: scale(1);
+    }
+
+    &.status-inactive {
+        background-color: var(--warningColor);
+        color: white;
+        transform: scale(1);
+    }
+}
+
+// Transições para linhas da tabela
+.mat-row {
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: #f8f9fa;
+        transform: translateX(2px);
+    }
+}
+
+// Transições para botões de ação
+.actions-buttons button {
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+// Transições para cards de estatísticas
+.stats-card {
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+}
+
+// Estados de loading
+.loading-container {
+    .mat-spinner {
+        animation: spin 1s linear infinite;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// Validação de formulário
+.team-form {
+    .mat-form-field {
+        &.ng-invalid.ng-touched {
+            .mat-form-field-outline {
+                color: var(--dangerColor);
+            }
+        }
+
+        &.ng-valid.ng-touched {
+            .mat-form-field-outline {
+                color: var(--successColor);
+            }
+        }
+    }
+}
+
+// Hover effects para botões de ação
+.actions-buttons {
+    button {
+        transition: all 0.2s ease;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}
+
+// Status toggle
+mat-slide-toggle {
+    transition: all 0.3s ease;
+
+    .mat-slide-toggle-bar {
+        background-color: #ccc;
+        transition: background-color 0.3s ease;
+    }
+
+    &.mat-checked {
+        .mat-slide-toggle-bar {
+            background-color: var(--primaryColor);
+        }
+    }
+
+    .mat-slide-toggle-thumb {
+        transition: transform 0.3s ease;
+    }
+
+    &:hover {
+        .mat-slide-toggle-bar {
+            background-color: #b0b0b0;
+        }
+
+        &.mat-checked .mat-slide-toggle-bar {
+            background-color: darken(#796df6, 10%);
+        }
+    }
+}
+
+// Paginação
+mat-paginator {
+    .mat-paginator-container {
+        background-color: transparent;
+    }
+
+    .mat-paginator-page-size-select {
+        margin-right: 16px;
+    }
+}
+
+// Scrollbar customizada para tabela
+.table-responsive {
+    &::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--primaryColor);
+        border-radius: 4px;
+
+        &:hover {
+            background: darken(#796df6, 10%);
+        }
+    }
+}

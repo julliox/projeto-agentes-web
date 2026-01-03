@@ -1,0 +1,183 @@
+<div
+    class="sidebar-area bg-white active"
+    [ngClass]="{'active': isSidebarToggled}"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.dark-sidebar]="themeService.isSidebarDark()"
+    [class.right-sidebar]="themeService.isRightSidebar()"
+    [class.hide-sidebar]="themeService.isHideSidebar()"
+    [class.card-borderd-theme]="themeService.isCardBorder()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <div class="logo bg-white">
+        <a routerLink="/" class="d-flex align-items-center">
+            <img src="images/logo-icon.svg" alt="logo-icon">
+            <span class="fw-semibold">Daxa</span>
+        </a>
+    </div>
+    <div
+        (click)="toggle()"
+        class="burger-menu"
+        [ngClass]="{'active': isSidebarToggled}"
+    >
+        <span class="top-bar"></span>
+        <span class="middle-bar"></span>
+        <span class="bottom-bar"></span>
+    </div>
+    <ng-scrollbar visibility="hover">
+        <div class="sidebar-inner">
+            <!-- Informações do usuário -->
+            <div class="user-info" *ngIf="currentUserName">
+                <div class="user-avatar">
+                    <i class="material-symbols-outlined">account_circle</i>
+                </div>
+                <div class="user-details">
+                    <h6 class="user-name">{{ currentUserName }}</h6>
+                    <span class="user-role" *ngIf="currentUserProfile">
+                        {{ currentUserProfile?.name }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="sidebar-menu">
+                <mat-accordion>
+                    <span class="sub-title text-body">
+                        MAIN
+                    </span>
+                    
+                    <!-- Dashboard -->
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true" *ngIf="canAccessRoute('/')">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    dashboard
+                                </i>
+                                <span class="title">
+                                    Dashboard
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Overview
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+
+                    <!-- Turns -->
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true" *ngIf="canAccessRoute('/turno/create') || canAccessRoute('/turno/view') || canAccessRoute('/ponto') || canAccessRoute('/turnos-calendar')">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    schedule
+                                </i>
+                                <span class="title">
+                                    Turns
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item" *ngIf="canAccessRoute('/')">
+                                <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Turn Table
+                                </a>
+                            </li>
+                            <li class="sidemenu-item" *ngIf="canAccessRoute('/turnos-calendar')">
+                                <a routerLink="/turnos-calendar" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    <i class="material-symbols-outlined" style="font-size: 18px; margin-right: 8px;">calendar_month</i>
+                                    Calendário de Turnos
+                                </a>
+                            </li>
+                            <li class="sidemenu-item" *ngIf="canAccessRoute('/turno/create')">
+                                <a routerLink="/turno/create" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Create Turns
+                                </a>
+                            </li>
+                            <li class="sidemenu-item" *ngIf="canAccessRoute('/help-desk-page/tipo-turno')">
+                                <a routerLink="/help-desk-page/tipo-turno" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Type Turns
+                                </a>
+                            </li>
+                            <li class="sidemenu-item" *ngIf="canAccessRoute('/ponto')">
+                                <a routerLink="/ponto" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Meu Ponto (AGENT)
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+
+                    <!-- Teams -->
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true" *ngIf="canAccessRoute('/teams')">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    groups
+                                </i>
+                                <span class="title">
+                                    Teams
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/teams" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Manage Teams
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+
+                    <!-- Ponto (se desejar mostrar em seção separada)
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true" *ngIf="canAccessRoute('/ponto')">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    toggle_on
+                                </i>
+                                <span class="title">
+                                    Ponto
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/ponto" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Meu Ponto
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+                    -->
+
+                    <!-- Agents -->
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true" *ngIf="canAccessRoute('/help-desk-page/agents')">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    people
+                                </i>
+                                <span class="title">
+                                    Agents
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item" *ngIf="canAccessRoute('/help-desk-page/agents')">
+                                <a routerLink="/help-desk-page/agents" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Agents List
+                                </a>
+                            </li>
+                            <li class="sidemenu-item" *ngIf="canAccessRoute('/help-desk-page/add-agent')">
+                                <a routerLink="/help-desk-page/add-agent" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Add Agent
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+
+                </mat-accordion>
+            </div>
+        </div>
+    </ng-scrollbar>
+</div>

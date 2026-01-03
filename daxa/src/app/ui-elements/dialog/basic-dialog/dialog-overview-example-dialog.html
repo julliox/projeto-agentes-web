@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>
+    Hi Mateo Luca
+</h1>
+<div mat-dialog-content>
+    <p>
+        Certeza que deseja excluir esse agente?
+    </p>
+</div>
+<div mat-dialog-actions class="mt-0">
+    <button mat-flat-button color="warn" (click)="onNoClick()">
+        Sim
+    </button>
+    <button mat-flat-button class="daxa" [mat-dialog-close]="data.animal" cdkFocusInitial>
+        Não
+    </button>
+</div>

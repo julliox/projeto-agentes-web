@@ -1,0 +1,35 @@
+.alert-test-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.test-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-weight: 500;
+    
+    i {
+        font-size: 18px;
+    }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+    .button-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .test-button {
+        justify-content: center;
+    }
+} 

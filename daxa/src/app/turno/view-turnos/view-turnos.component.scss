@@ -1,0 +1,113 @@
+/* src/app/components/view-turnos/view-turnos.component.scss */
+
+.mat-card {
+    &.daxa-card {
+        &.view-turnos-card {
+            .mat-card-content {
+                margin-left: -20px;
+                margin-right: -20px;
+
+                // Removed styles related to the table since we're using a calendar now
+                // .view-turnos-table {
+                //   // Table styles removed
+                // }
+
+                // Styles for FullCalendar
+                .fc {
+                    width: 100%;
+
+                    // Adjust the toolbar spacing
+                    .fc-toolbar {
+                        margin-bottom: 20px;
+                    }
+
+                    // Customize the header
+                    .fc-header-toolbar {
+                        .fc-toolbar-title {
+                            font-size: 1.5rem;
+                            font-weight: bold;
+                        }
+                    }
+
+                    // Customize the day cells
+                    .fc-daygrid-day {
+                        &.fc-day-today {
+                            background-color: #e8f0fe; // Example: highlight today's date
+                        }
+                    }
+
+                    // Customize events
+                    .fc-event {
+                        background-color: #3f51b5;
+                        color: #fff;
+                        border: none;
+                        border-radius: 4px;
+                        padding: 2px 4px;
+                    }
+                }
+            }
+
+            &.rtl-enabled {
+                .mat-card-content {
+                    .fc {
+                        direction: rtl;
+                        // Additional RTL styles if needed
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .mat-card {
+        &.daxa-card {
+            &.view-turnos-card {
+                .mat-card-content {
+                    margin-left: -15px;
+                    margin-right: -15px;
+
+                    // Responsive styles for FullCalendar
+                    .fc {
+                        .fc-toolbar {
+                            flex-direction: column;
+                            align-items: flex-start;
+                        }
+
+                        .fc-header-toolbar {
+                            .fc-toolbar-title {
+                                font-size: 1.2rem;
+                            }
+                        }
+                    }
+                }
+
+                &.rtl-enabled {
+                    .mat-card-content {
+                        .fc {
+                            // RTL mobile styles if needed
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+}
+.calendar-container {
+    max-width: 1000px; // Defina a largura máxima desejada
+    margin: 0 auto;   // Centraliza o calendário horizontalmente
+}

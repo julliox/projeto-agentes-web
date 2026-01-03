@@ -1,0 +1,61 @@
+.agent-profile-container {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.loading-container, .error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.error-container {
+    color: red;
+    font-size: 1.2em;
+}
+
+.active-status {
+    color: green;
+    font-weight: bold;
+}
+
+.inactive-status {
+    color: red;
+    font-weight: bold;
+
+}
+
+mat-card {
+    padding: 20px;
+}
+
+mat-card-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+mat-card-subtitle {
+    font-size: 1.2em;
+}
+
+.agent-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.full-width {
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+textarea {
+    resize: none;
+}
+
+.button-container {
+    margin-top: 16px; /* Espaçamento acima do botão */
+    display: flex;
+    justify-content: flex-end; /* Alinha o botão à direita */
+}

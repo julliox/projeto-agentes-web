@@ -1,0 +1,203 @@
+/* tipo-turno-create-dialog.component.scss */
+
+.dialog-container {
+    min-width: 400px;
+    max-width: 450px;
+    padding: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.dialog-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    color: var(--daxaColor);
+    font-weight: 600;
+    padding: 0;
+
+    .title-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.dialog-content {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+
+    form {
+        .form-field {
+            width: 100%;
+            margin-bottom: 16px;
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+
+            .mat-mdc-form-field {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #e9ecef;
+    padding: 16px 0 0 0;
+
+    .cancel-button,
+    .submit-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+
+        mat-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+        }
+
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            transform: none;
+            box-shadow: none;
+        }
+    }
+
+    .cancel-button {
+        color: #6c757d;
+        border-color: #6c757d;
+
+        &:hover {
+            background-color: #6c757d;
+            color: white;
+        }
+    }
+
+    .submit-button {
+        &:disabled {
+            opacity: 0.6;
+        }
+    }
+}
+
+/* Dark theme adjustments */
+::ng-deep {
+    .mat-mdc-dialog-container {
+        .mat-mdc-dialog-surface {
+            padding: 24px;
+            overflow: hidden;
+        }
+
+        &.component-dark-theme {
+            .dialog-title {
+                color: var(--whiteColor);
+            }
+
+            .dialog-actions {
+                border-top-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .cancel-button {
+                color: #adb5bd;
+                border-color: #adb5bd;
+
+                &:hover {
+                    background-color: #adb5bd;
+                    color: #1b232d;
+                }
+            }
+
+            .mat-mdc-form-field {
+                .mat-mdc-form-field-hint {
+                    color: #adb5bd;
+                }
+            }
+        }
+    }
+
+    /* Ajustes específicos para o formulário */
+    .mat-mdc-form-field {
+        width: 100% !important;
+        
+        .mat-mdc-form-field-wrapper {
+            padding-bottom: 0;
+        }
+
+        .mat-mdc-text-field-wrapper {
+            box-sizing: border-box;
+        }
+
+        input[type="number"] {
+            text-align: right;
+        }
+
+        .mat-mdc-form-field-hint {
+            color: #6c757d;
+            font-size: 12px;
+            line-height: 1.2;
+        }
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .dialog-container {
+        min-width: 100%;
+        max-width: 100%;
+        padding: 16px;
+    }
+
+    .dialog-actions {
+        flex-direction: column;
+        gap: 8px;
+
+        .cancel-button,
+        .submit-button {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 480px) {
+    .dialog-container {
+        padding: 12px;
+    }
+
+    .dialog-title {
+        font-size: 18px;
+        
+        .title-icon {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .dialog-content {
+        form {
+            .form-field {
+                margin-bottom: 12px;
+            }
+        }
+    }
+}

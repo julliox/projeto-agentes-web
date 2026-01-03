@@ -1,0 +1,77 @@
+.login-test-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.section-title {
+    margin: 20px 0 10px 0;
+    color: var(--blackColor);
+    font-weight: 600;
+    border-bottom: 2px solid var(--daxaColor);
+    padding-bottom: 5px;
+    
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.test-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    i {
+        font-size: 18px;
+    }
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.flow-button {
+    grid-column: 1 / -1;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--daxaColor), #0a58ca);
+    color: white;
+    font-weight: 600;
+    
+    &:hover {
+        background: linear-gradient(135deg, #0a58ca, var(--daxaColor));
+    }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+    .button-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .test-button {
+        justify-content: center;
+    }
+    
+    .section-title {
+        text-align: center;
+    }
+}
+
+// Dark theme adjustments
+.component-dark-theme {
+    .section-title {
+        color: var(--whiteColor);
+        border-bottom-color: var(--daxaColor);
+    }
+} 
