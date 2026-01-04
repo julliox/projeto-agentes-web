@@ -27,7 +27,7 @@ export interface LoginRequest {
 export class AuthenticationService {
     private currentUserSubject = new BehaviorSubject<any>(null);
     public currentUser$ = this.currentUserSubject.asObservable();
-    
+
     public apiUrl = environment.apiUrl;
 
     constructor(
@@ -45,33 +45,33 @@ export class AuthenticationService {
      */
     login(email: string, senha: string): Observable<LoginResponse> {
         const loginData: LoginRequest = { email, senha };
-        
+
         return this.http.post<LoginResponse>(`${this.apiUrl}/authentication/login`, loginData, {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' })
         }).pipe(
             tap(response => {
                 if (response.token) {
                     this.saveSession(response.token);
-                    
+
                     // Decodificar token e atualizar perfil do usuário
                     const userProfile = this.jwtDecodeService.getUserProfile(response.token);
                     const userName = this.jwtDecodeService.getUserName(response.token);
                     const userEmail = this.jwtDecodeService.getUserEmail(response.token);
-                    
+
                     const user = {
                         id: userProfile?.id,
                         name: userName,
                         email: userEmail,
                         profile: userProfile
                     };
-                    
+
                     this.currentUserSubject.next(user);
                     this.authorizationService.updateUserProfile(response.token);
                 }
             }),
             catchError((error: HttpErrorResponse) => {
                 let errorMessage = 'Erro desconhecido durante o login';
-                
+
                 if (error.status === 401) {
                     errorMessage = 'Email ou senha incorretos';
                 } else if (error.status === 400) {
@@ -81,7 +81,7 @@ export class AuthenticationService {
                 } else if (error.status === 0) {
                     errorMessage = 'Servidor não está disponível';
                 }
-                
+
                 console.error('Erro no login:', error);
                 return throwError(() => new Error(errorMessage));
             })
@@ -97,17 +97,17 @@ export class AuthenticationService {
             this.logout();
             return false;
         }
-        
+
         // Verificar se o token não expirou
         if (this.jwtDecodeService.isTokenExpired(token)) {
             console.warn('Token expirado');
             this.logout();
             return false;
         }
-        
+
         // Atualizar perfil do usuário
         this.authorizationService.updateUserProfile(token);
-        
+
         return true;
     }
 
@@ -122,6 +122,7 @@ export class AuthenticationService {
      * Logout do usuário
      */
     logout(): void {
+        console.log("logout")
         this.removeSession();
         this.currentUserSubject.next(null);
         this.authorizationService.clearUserProfile();
