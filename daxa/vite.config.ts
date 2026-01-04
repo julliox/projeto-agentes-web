@@ -2,6 +2,9 @@ import { defineConfig } from 'vite';
 import { VitePluginNode } from 'vite-plugin-node';
 
 export default defineConfig({
+  define: {
+    global: 'globalThis',
+  },
   plugins: [
     ...VitePluginNode({
       adapter: 'express',

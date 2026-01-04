@@ -37,7 +37,33 @@ export class AuthenticationService {
         private authorizationService: AuthorizationService
     ) {
         // Verificar se há token válido ao inicializar
-        this.checkTokenValidity();
+        // Se não houver token válido, limpa o estado mas não faz logout (evita loop)
+        const token = this.session;
+        if (token && !this.jwtDecodeService.isTokenExpired(token)) {
+            // Token válido - atualizar perfil
+            this.authorizationService.updateUserProfile(token);
+            const userProfile = this.jwtDecodeService.getUserProfile(token);
+            const userName = this.jwtDecodeService.getUserName(token);
+            const userEmail = this.jwtDecodeService.getUserEmail(token);
+
+            const user = {
+                id: userProfile?.id,
+                name: userName,
+                email: userEmail,
+                profile: userProfile
+            };
+
+            this.currentUserSubject.next(user);
+        } else {
+            // Token inválido ou ausente - limpar estado sem fazer logout
+            this.currentUserSubject.next(null);
+            this.authorizationService.clearUserProfile();
+        }
+    }
+
+    isAdmin(): boolean {
+        const token = this.session;
+        return this.jwtDecodeService.getUserProfile(token)?.name == "ADMINISTRATOR"
     }
 
     /**
@@ -90,18 +116,20 @@ export class AuthenticationService {
 
     /**
      * Verifica se o token é válido
+     * IMPORTANTE: Não chama logout() aqui para evitar loops infinitos
      */
     checkTokenValidity(): boolean {
         const token = this.session;
         if (!token) {
-            this.logout();
+            // Não chama logout() aqui - apenas retorna false
+            // O logout deve ser chamado explicitamente quando necessário
             return false;
         }
 
         // Verificar se o token não expirou
         if (this.jwtDecodeService.isTokenExpired(token)) {
             console.warn('Token expirado');
-            this.logout();
+            // Não chama logout() aqui - apenas retorna false
             return false;
         }
 
@@ -113,16 +141,27 @@ export class AuthenticationService {
 
     /**
      * Verifica se o usuário está autenticado
+     * IMPORTANTE: Este método não chama logout() para evitar loops
      */
     isAuthenticated(): boolean {
-        return this.checkTokenValidity() && !!this.session;
+        const token = this.session;
+        if (!token) {
+            return false;
+        }
+
+        // Verificar se o token não expirou sem chamar logout
+        if (this.jwtDecodeService.isTokenExpired(token)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
      * Logout do usuário
      */
     logout(): void {
-        console.log("logout")
+        console.log('🔓 Fazendo logout do usuário...');
         this.removeSession();
         this.currentUserSubject.next(null);
         this.authorizationService.clearUserProfile();

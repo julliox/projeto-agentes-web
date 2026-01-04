@@ -4,7 +4,7 @@ import { AlertService } from './alert.service';
 @Injectable({
     providedIn: 'root'
 })
-export class NotificationService {
+export class NotificationBarService {
 
     constructor(private alertService: AlertService) {}
 
@@ -35,4 +35,4 @@ export class NotificationService {
     showInfo(message: string, duration: number = 3000): void {
         this.alertService.showInfo(message, duration);
     }
-} 
+}

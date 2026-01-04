@@ -25,7 +25,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import {CalendarOptions} from "@fullcalendar/core";
 import { CustomizerSettingsService } from '../../customizer-settings/customizer-settings.service';
-import { NotificationService } from '../../services/notification.service';
+import { NotificationBarService } from '../../services/notification-bar.service';
 
 
 // Defina os formatos de data personalizados
@@ -103,7 +103,7 @@ export class TurnoPageCreateComponent implements OnInit {
         private agentService: AgentService,
         private turnoService: TurnoService,
         public themeService: CustomizerSettingsService,
-        private notificationService: NotificationService
+        private notificationService: NotificationBarService
     ) {
         this.turnoForm = this.fb.group({
             typeTurn: ['', Validators.required],

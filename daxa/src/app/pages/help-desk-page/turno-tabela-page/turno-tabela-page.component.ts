@@ -121,7 +121,7 @@ export class TurnoTabelaPageComponent implements OnInit {
         this.carregarAgentes();
         this.carregarTurnos();
         this.loadTipoTurnos();
-        
+
         // Verificar se há um agentId na rota
         this.route.paramMap.subscribe(params => {
             const agentId = params.get('agentId');
@@ -138,7 +138,6 @@ export class TurnoTabelaPageComponent implements OnInit {
         this.tipoTurnoService.getAllTipoTurnos().subscribe({
             next: (data) => {
                 this.tiposTurnos = data;
-                console.log("Tipo Turnos>>>", this.tiposTurnos);
                 this.isLoading = false;
             },
             error: (err) => {
@@ -206,7 +205,6 @@ export class TurnoTabelaPageComponent implements OnInit {
         this.turnoService.getAllTurnos().subscribe({
             next: (data: any) => {
                     this.turnos = data;
-                    console.log("TURNOS>>>>>>", this.turnos)
                     this.prepararTurnosMapa();
                     this.isLoading = false;
             },
