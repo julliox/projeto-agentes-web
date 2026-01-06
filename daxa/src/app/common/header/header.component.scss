@@ -1,3 +1,16 @@
+// Animação de sino piscando quando há notificações não lidas
+@keyframes bellRing {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: rotate(-10deg);
+    }
+    20%, 40%, 60%, 80% {
+        transform: rotate(10deg);
+    }
+}
+
 ::ng-deep {
     .header-area {
         top: 25px;
@@ -174,6 +187,7 @@
                         font-size: 20px;
                         margin-right: -10px;
                         color: var(--blackColor);
+                        transition: transform 0.3s ease;
                     }
                     &.mat-mdc-icon-button {
                         .mat-mdc-button-persistent-ripple {
@@ -182,7 +196,7 @@
                     }
                     .daxa-badge {
                         top: -15px;
-                        width: 17px;
+                        min-width: 17px;
                         height: 17px;
                         line-height: 17px;
                         position: relative;
@@ -190,6 +204,7 @@
                         display: inline-block;
                         color: var(--whiteColor);
                         background-color: var(--dangerColor);
+                        padding: 0 4px;
                         font: {
                             size: 10px;
                             weight: 500;
@@ -629,14 +644,22 @@
                 };
                 .link-btn {
                     font-size: 15px;
+                    cursor: pointer;
                 }
             }
             .menu-body {
                 margin-bottom: 25px;
+                max-height: 400px;
+                overflow-y: auto;
 
                 li {
                     border-bottom: 1px dashed #e7e2e2;
                     padding: 18px 25px 18px 80px;
+                    transition: background-color 0.2s ease;
+
+                    &.unread {
+                        background-color: rgba(101, 96, 240, 0.05);
+                    }
 
                     .icon {
                         top: 50%;
@@ -644,8 +667,16 @@
                         width: 44px;
                         height: 44px;
                         background: #f5f5f5;
-                        color: var(--daxaColor);
+                        color: var(--whiteColor);
                         transform: translateY(-50%);
+
+                        &.bg-success {
+                            background-color: #2ecc71;
+                        }
+
+                        &.bg-danger {
+                            background-color: #e74c3c;
+                        }
 
                         i {
                             left: 0;
@@ -670,6 +701,7 @@
                         right: 25px;
                         height: 7px;
                         transform: translateY(-50%);
+                        background-color: var(--daxaColor);
                     }
                     .time {
                         font-size: 14.5px;
@@ -680,27 +712,21 @@
                         right: 0;
                         bottom: 0;
                         z-index: 1;
+                        cursor: pointer;
                     }
                     &:hover {
+                        background-color: rgba(101, 96, 240, 0.08);
                         .icon {
-                            background-color: var(--daxaColor) !important;
-                            color: var(--whiteColor) !important;
+                            opacity: 0.9;
                         }
                     }
                     &:first-child {
                         border-top: 1px dashed #e7e2e2;
                     }
-                    &:nth-child(2) {
-                        .icon {
-                            color: #39b2de;
-                        }
-                    }
-                    &:nth-child(3) {
-                        .icon {
-                            color: #06b48a;
-                        }
-                    }
                 }
+            }
+            .empty-state {
+                padding: 40px 25px;
             }
             .menu-footer {
                 a {
@@ -726,13 +752,31 @@
                         border-color: rgba(255, 255, 255, 0.09);
                         color: var(--whiteColor);
 
+                        &.unread {
+                            background-color: rgba(101, 96, 240, 0.1);
+                        }
+
                         .icon {
                             background: #293542;
+
+                            &.bg-success {
+                                background-color: #27ae60;
+                            }
+
+                            &.bg-danger {
+                                background-color: #c0392b;
+                            }
                         }
                         &:first-child {
                             border-color: rgba(255, 255, 255, 0.09);
                         }
+                        &:hover {
+                            background-color: rgba(101, 96, 240, 0.15);
+                        }
                     }
+                }
+                .empty-state {
+                    color: rgba(255, 255, 255, 0.7);
                 }
                 a {
                     color: var(--whiteColor);
