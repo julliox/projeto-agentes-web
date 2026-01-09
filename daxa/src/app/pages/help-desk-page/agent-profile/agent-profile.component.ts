@@ -108,7 +108,7 @@ export class AgentProfileComponent implements OnInit {
         let request = {
             idAgente: this.agentProfile?.id,
             nomeAgente: this.agentProfile?.name,
-            mesPagamento: "2024-11"
+            mesPagamento: this.getMesAnoAtualManual()
         }
 
         console.log(request);
@@ -123,5 +123,16 @@ export class AgentProfileComponent implements OnInit {
                 );
             });
     }
+
+    //TODO: CRIAR ARQUIVO PARA FUNÇÕES UTIL
+    getMesAnoAtualManual(): string {
+        const dataAtual = new Date();
+        const ano = dataAtual.getFullYear();
+        const mes = dataAtual.getMonth() + 1;
+        const mesFormatado = String(mes).padStart(2, '0');
+
+        return `${ano}-${mesFormatado}`;
+    }
+
 
 }

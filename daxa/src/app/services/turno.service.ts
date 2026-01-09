@@ -30,7 +30,7 @@ export interface TurnCreateDTO {
 export class TurnoService {
     private baseUrl      = `${environment.apiUrl}/turno`;
     private tipoTurnoUrl = `${environment.apiUrl}/tiposTurno`;
-    private pdfTesteUrl  = `${environment.apiUrl}/testeFolha/pdfDecisaoSemAssinatura`;
+    private pdfTesteUrl  = `${environment.apiUrl}/testeFolha/gerar-pdf-folha-de-pagamento`;
 
     constructor(private http: HttpClient) {}
 

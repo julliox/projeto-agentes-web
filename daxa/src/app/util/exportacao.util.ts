@@ -4,12 +4,6 @@ export class ExportacaoUtil {
     public  static ZIP_TYPE = 'application/zip';
     public static PNG_TYPE = 'application/png';
 
-    public static download(arquivo: any, tipo: string, nome: string) {
-        const a = this.criaTagLink(arquivo, tipo);
-        a.download = nome;
-        this.clicaTagLink(a);
-    }
-
     public static verArquivo(arquivo: any, tipo: string, nome: string) {
         const a = this.criaTagLink(arquivo, tipo);
         a.setAttribute('target', '_blank');
@@ -17,18 +11,24 @@ export class ExportacaoUtil {
         this.clicaTagLink(a);
     }
 
-    public static criaTagLink(arquivo: any, tipo: string){
-        const file = new Blob([arquivo['body']], {type: tipo});
-        const fileURL = URL.createObjectURL(file);
-        const a = document.createElement("a");
-        a.href = fileURL;
-        return a;
+    public static criaTagLink(arquivo: any, tipo: string): HTMLAnchorElement {
+        const blob = new Blob([arquivo], { type: tipo });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        return link;
     }
 
-    public static clicaTagLink(a: any){
+    public static download(arquivo: any, tipo: string, nome: string) {
+        const a = this.criaTagLink(arquivo, tipo);
+        a.download = nome;
+        this.clicaTagLink(a);
+    }
+
+    public static clicaTagLink(a: HTMLAnchorElement){
         window.document.body.appendChild(a);
         a.click();
         URL.revokeObjectURL(a.href);
+        window.document.body.removeChild(a);
     }
 
     public static redirecionarUrlExterna(url:string){
