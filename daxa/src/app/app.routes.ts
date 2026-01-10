@@ -41,6 +41,7 @@ import { RoleGuard } from './guards/role.guard';
 import { AgentPontoComponent } from './pages/agent-ponto/agent-ponto.component';
 import { TeamsPageComponent } from './pages/teams-page/teams-page.component';
 import { TurnosCalendarComponent } from './pages/turnos-calendar/turnos-calendar.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
     // Rotas públicas (sem autenticação)
@@ -56,6 +57,7 @@ export const routes: Routes = [
 
 
     // Rotas protegidas (com autorização baseada em perfil)
+    {path: 'dashboard', component: DashboardComponent, canActivate: [RoleGuard]},
     {path: '', component: TurnoTabelaPageComponent, canActivate: [RoleGuard]},
     {path: 'ponto', component: AgentPontoComponent, canActivate: [RoleGuard]},
 

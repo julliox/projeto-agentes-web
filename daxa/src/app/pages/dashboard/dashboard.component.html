@@ -1,0 +1,185 @@
+<!-- Breadcrumb -->
+<div
+    class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <h5 class="mb-0">
+        <i class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px;">dashboard</i>
+        Dashboard
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/dashboard" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Home
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Dashboard</li>
+    </ol>
+</div>
+
+<!-- Cards de Informações Principais -->
+<div class="row mb-25">
+    <!-- Card: Agentes Online -->
+    <div class="col-md-4">
+        <mat-card
+            class="daxa-card stats-card border-radius bg-white border-none"
+            [class.component-dark-theme]="themeService.isDark()"
+        >
+            <mat-card-content>
+                <div *ngIf="isLoadingCount" class="loading-container">
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </div>
+                <div class="d-flex align-items-center justify-content-between" *ngIf="!isLoadingCount">
+                    <div>
+                        <h5 class="mb-2 text-body">Agentes Online</h5>
+                        <h2 class="mb-0 fw-bold">{{ onlineAgentsCount }}</h2>
+                        <span class="text-body d-block mt-2">
+                            <i class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle;">
+                                check_circle
+                            </i>
+                            Agentes ativos agora
+                        </span>
+                    </div>
+                    <div class="icon-wrapper rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="material-symbols-outlined">people</i>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- Card: Placeholder 1 (Não implementado ainda) -->
+    <div class="col-md-4">
+        <mat-card
+            class="daxa-card stats-card border-radius bg-white border-none"
+            [class.component-dark-theme]="themeService.isDark()"
+        >
+            <mat-card-content>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="mb-2 text-body">Em breve</h5>
+                        <h2 class="mb-0 fw-bold">-</h2>
+                        <span class="text-body d-block mt-2">
+                            Informação a ser implementada
+                        </span>
+                    </div>
+                    <div class="icon-wrapper rounded-circle d-flex align-items-center justify-content-center" style="opacity: 0.3;">
+                        <i class="material-symbols-outlined">more_horiz</i>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- Card: Placeholder 2 (Não implementado ainda) -->
+    <div class="col-md-4">
+        <mat-card
+            class="daxa-card stats-card border-radius bg-white border-none"
+            [class.component-dark-theme]="themeService.isDark()"
+        >
+            <mat-card-content>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="mb-2 text-body">Em breve</h5>
+                        <h2 class="mb-0 fw-bold">-</h2>
+                        <span class="text-body d-block mt-2">
+                            Informação a ser implementada
+                        </span>
+                    </div>
+                    <div class="icon-wrapper rounded-circle d-flex align-items-center justify-content-center" style="opacity: 0.3;">
+                        <i class="material-symbols-outlined">more_horiz</i>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<!-- Tabela de Histórico -->
+<mat-card
+    class="daxa-card history-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Histórico de Status
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <!-- Indicador de carregamento -->
+        <div *ngIf="isLoadingHistory" class="loading-container">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+
+        <!-- Mensagem de erro -->
+        <div *ngIf="errorMessage && !isLoadingHistory" class="error-message">
+            {{ errorMessage }}
+        </div>
+
+        <div class="history-table" *ngIf="!isLoadingHistory && !errorMessage">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                    <!-- Nome do Agente Column -->
+                    <ng-container matColumnDef="agentName">
+                        <th mat-header-cell *matHeaderCellDef> Nome do Agente </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <div class="d-flex align-items-center">
+                                <span class="material-symbols-outlined agent-icon">
+                                    person
+                                </span>
+                                {{ element.agentName }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef> Status </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="daxa-badge d-inline-block" [ngClass]="getStatusClass(element.status)">
+                                <span class="status-dot"></span>
+                                {{ element.status }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Data do Status Column -->
+                    <ng-container matColumnDef="statusDate">
+                        <th mat-header-cell *matHeaderCellDef> Data do Status </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="d-flex align-items-center">
+                                <i class="material-symbols-outlined" style="font-size: 18px; margin-right: 8px;">
+                                    schedule
+                                </i>
+                                {{ formatDate(element.statusDate || element.timestamp) }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Header and Row Definitions -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center; padding: 20px;">
+                            Nenhum registro encontrado
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <mat-paginator 
+                #paginator 
+                [pageSizeOptions]="pageSizeOptions" 
+                [pageSize]="pageSize"
+                [length]="totalElements"
+                [pageIndex]="pageIndex"
+                showFirstLastButtons
+            ></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>
