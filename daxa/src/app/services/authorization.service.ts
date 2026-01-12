@@ -26,6 +26,8 @@ export class AuthorizationService {
         { route: '/view-turnos/', allowedProfiles: ['ADMINISTRATOR'] },
         { route: '/turnos-calendar', allowedProfiles: ['ADMINISTRATOR'] },
         { route: '/help-desk-page/tipo-turno', allowedProfiles: ['ADMINISTRATOR'] },
+        { route: '/help-desk-page/tipo-adicao', allowedProfiles: ['ADMINISTRATOR'] },
+        { route: '/help-desk-page/adicao-salario', allowedProfiles: ['ADMINISTRATOR'] },
 
         // Agentes
         { route: '/help-desk-page/agents', allowedProfiles: ['ADMINISTRATOR'] },

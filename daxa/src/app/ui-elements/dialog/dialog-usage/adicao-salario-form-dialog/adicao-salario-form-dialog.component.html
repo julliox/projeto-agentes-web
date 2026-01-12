@@ -1,0 +1,69 @@
+<div class="dialog-container">
+    <h2 mat-dialog-title class="dialog-title">
+        <mat-icon class="title-icon">{{ isEditMode ? 'edit' : 'add_circle' }}</mat-icon>
+        {{ dialogTitle }}
+    </h2>
+    
+    <div mat-dialog-content class="dialog-content">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <!-- Campo Colaborador - apenas no modo criação -->
+            <mat-form-field appearance="outline" class="form-field" *ngIf="!isEditMode">
+                <mat-label>Colaborador</mat-label>
+                <mat-select formControlName="agentId" required>
+                    <mat-option *ngFor="let agente of agentes" [value]="agente.id">
+                        {{ agente.name }} ({{ agente.email }})
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('agentId')?.hasError('required') && form.get('agentId')?.touched">
+                    Colaborador é obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Tipo de Adição</mat-label>
+                <mat-select formControlName="tipoAdicaoId" [required]="!isEditMode">
+                    <mat-option *ngFor="let tipo of tiposAdicao" [value]="tipo.id">
+                        {{ tipo.desTipoAdicao }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('tipoAdicaoId')?.hasError('required') && form.get('tipoAdicaoId')?.touched">
+                    Tipo de adição é obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Valor</mat-label>
+                <input matInput type="number" formControlName="qtyAdicao" [required]="!isEditMode" min="0.01" step="0.01">
+                <mat-error *ngIf="form.get('qtyAdicao')?.hasError('required') && form.get('qtyAdicao')?.touched">
+                    Valor é obrigatório
+                </mat-error>
+                <mat-error *ngIf="form.get('qtyAdicao')?.hasError('min') && form.get('qtyAdicao')?.touched">
+                    Valor deve ser maior que zero
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Mês (YYYY-MM)</mat-label>
+                <input matInput formControlName="mesAdicao" [required]="!isEditMode" placeholder="2024-01" maxlength="7">
+                <mat-hint>Formato: YYYY-MM (ex: 2024-01)</mat-hint>
+                <mat-error *ngIf="form.get('mesAdicao')?.hasError('required') && form.get('mesAdicao')?.touched">
+                    Mês é obrigatório
+                </mat-error>
+                <mat-error *ngIf="form.get('mesAdicao')?.hasError('pattern') && form.get('mesAdicao')?.touched">
+                    Formato inválido. Use YYYY-MM (ex: 2024-01)
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+    
+    <div mat-dialog-actions class="dialog-actions">
+        <button mat-stroked-button type="button" (click)="onCancel()" class="cancel-button">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" (click)="onSubmit()" class="submit-button">
+            <mat-icon>save</mat-icon>
+            {{ submitButtonText }}
+        </button>
+    </div>
+</div>

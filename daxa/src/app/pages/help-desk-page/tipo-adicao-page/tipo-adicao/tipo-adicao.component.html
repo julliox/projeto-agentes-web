@@ -1,0 +1,90 @@
+<!-- Breadcrumb -->
+<div
+    class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <h5 class="mb-0">Gerenciamento de Tipos de Adição</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Help Desk
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Tipos de Adição</li>
+        <li class="breadcrumb-item position-relative">Gerenciamento</li>
+    </ol>
+</div>
+
+<!-- Card Principal -->
+<mat-card
+    class="daxa-card mb-25 border-radius bg-white border-none d-block"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">Tipos de Adição</h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-raised-button color="primary" (click)="openCreateDialog()">
+                <mat-icon>add</mat-icon>
+                Criar Novo Tipo de Adição
+            </button>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <!-- Indicador de Carregamento -->
+        <div *ngIf="isLoading" class="loading-spinner">
+            <mat-spinner diameter="30"></mat-spinner>
+        </div>
+
+        <!-- Mensagem de Erro -->
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+
+        <!-- Tabela de Tipos de Adição -->
+        <div class="table-responsive" *ngIf="!isLoading && !errorMessage">
+            <mat-table [dataSource]="dataSource" class="custom-table" matSort>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                </ng-container>
+
+                <!-- Descrição Column -->
+                <ng-container matColumnDef="desTipoAdicao">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Descrição </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.desTipoAdicao}} </mat-cell>
+                </ng-container>
+
+                <!-- Ações Column -->
+                <ng-container matColumnDef="acoes">
+                    <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="primary" (click)="editTipoAdicao(element)" class="action-button">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="deleteTipoAdicao(element.id)" class="action-button">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+
+            <!-- Paginação -->
+            <mat-paginator 
+                #paginator
+                [pageSizeOptions]="[5, 10, 20]" 
+                [pageSize]="10"
+                showFirstLastButtons
+                class="custom-paginator">
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

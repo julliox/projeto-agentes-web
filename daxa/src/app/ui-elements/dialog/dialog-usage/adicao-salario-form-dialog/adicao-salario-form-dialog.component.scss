@@ -1,0 +1,39 @@
+.dialog-container {
+    padding: 0;
+}
+
+.dialog-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    
+    .title-icon {
+        color: var(--daxaColor);
+    }
+}
+
+.dialog-content {
+    min-width: 450px;
+    max-width: 550px;
+    
+    .form-field {
+        width: 100%;
+        margin-bottom: 16px;
+    }
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #e9ecef;
+    
+    button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+}

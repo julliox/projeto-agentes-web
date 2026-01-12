@@ -176,6 +176,32 @@
                         </ul>
                     </mat-expansion-panel>
 
+                    <!-- Salários -->
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true" *ngIf="canAccessRoute('/help-desk-page/tipo-adicao') || canAccessRoute('/help-desk-page/adicao-salario')">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    payments
+                                </i>
+                                <span class="title">
+                                    Salários
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item" *ngIf="canAccessRoute('/help-desk-page/tipo-adicao')">
+                                <a routerLink="/help-desk-page/tipo-adicao" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Tipo de Adição
+                                </a>
+                            </li>
+                            <li class="sidemenu-item" *ngIf="canAccessRoute('/help-desk-page/adicao-salario')">
+                                <a routerLink="/help-desk-page/adicao-salario" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Adição de Salário
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+
                 </mat-accordion>
             </div>
         </div>

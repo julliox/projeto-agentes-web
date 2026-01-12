@@ -35,6 +35,8 @@ import {EditPageAgentComponent} from "./pages/help-desk-page/edit-page-agent/edi
 import {AddPageAgentComponent} from "./pages/help-desk-page/add-page-agent/add-page-agent.component";
 import {TurnoTabelaPageComponent} from "./pages/help-desk-page/turno-tabela-page/turno-tabela-page.component";
 import {TipoTurnoComponent} from "./pages/help-desk-page/tipo-turno-page/tipo-turno/tipo-turno.component";
+import {TipoAdicaoComponent} from "./pages/help-desk-page/tipo-adicao-page/tipo-adicao/tipo-adicao.component";
+import {AdicaoSalarioComponent} from "./pages/help-desk-page/adicao-salario-page/adicao-salario/adicao-salario.component";
 import {AgentProfileComponent} from "./pages/help-desk-page/agent-profile/agent-profile.component";
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
@@ -74,6 +76,8 @@ export const routes: Routes = [
             {path: 'turno-tabela', component: TurnoTabelaPageComponent},
             {path: 'turno-tabela/:agentId', component: TurnoTabelaPageComponent},
             {path: 'tipo-turno', component: TipoTurnoComponent},
+            {path: 'tipo-adicao', component: TipoAdicaoComponent},
+            {path: 'adicao-salario', component: AdicaoSalarioComponent},
             {path: 'agent-profile', component: AgentProfileComponent},
             {path: 'agent-profile/:id', component: AgentProfileComponent}
         ]
