@@ -13,7 +13,9 @@
     "serve:ssr:daxa": "node dist/daxa/server/server.mjs",
     "kill:ports": "npx kill-port 4200 3000 8080",
     "clean": "rimraf dist node_modules/.cache",
-    "reset": "npm run clean && npm install"
+    "reset": "npm run clean && npm install",
+    "fix:install": "powershell -ExecutionPolicy Bypass -File ./scripts/fix-npm-install.ps1",
+    "fix:install:v2": "powershell -ExecutionPolicy Bypass -File ./scripts/fix-npm-install-v2.ps1"
   },
   "private": true,
   "dependencies": {

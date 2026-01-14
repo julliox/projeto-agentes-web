@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -6,8 +7,12 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CustomizerSettingsService {
 
-    constructor() {
-        if (typeof window !== 'undefined' && window.localStorage) {
+    private isBrowser: boolean;
+
+    constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+        this.isBrowser = isPlatformBrowser(this.platformId);
+        
+        if (this.isBrowser && typeof window !== 'undefined' && window.localStorage) {
             // Dark Mode
             this.isDarkTheme = JSON.parse(localStorage.getItem('isDarkTheme') || 'false');
             this.updateDarkBodyClass();
@@ -40,17 +45,21 @@ export class CustomizerSettingsService {
     private isDarkTheme!: boolean;
     toggleTheme() {
         this.isDarkTheme = !this.isDarkTheme;
-        localStorage.setItem('isDarkTheme', JSON.stringify(this.isDarkTheme));
+        if (this.isBrowser && typeof window !== 'undefined' && window.localStorage) {
+            localStorage.setItem('isDarkTheme', JSON.stringify(this.isDarkTheme));
+        }
         this.updateDarkBodyClass();
     }
     isDark() {
         return this.isDarkTheme;
     }
     private updateDarkBodyClass() {
-        if (this.isDarkTheme) {
-            document.body.classList.add('dark-theme');
-        } else {
-            document.body.classList.remove('dark-theme');
+        if (this.isBrowser && typeof document !== 'undefined' && document.body) {
+            if (this.isDarkTheme) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
         }
     }
 
@@ -118,17 +127,21 @@ export class CustomizerSettingsService {
     private isRTLEnabledTheme!: boolean;
     toggleRTLEnabledTheme() {
         this.isRTLEnabledTheme = !this.isRTLEnabledTheme;
-        localStorage.setItem('isRTLEnabledTheme', JSON.stringify(this.isRTLEnabledTheme));
+        if (this.isBrowser && typeof window !== 'undefined' && window.localStorage) {
+            localStorage.setItem('isRTLEnabledTheme', JSON.stringify(this.isRTLEnabledTheme));
+        }
         this.updateRTLBodyClass();
     }
     isRTLEnabled() {
         return this.isRTLEnabledTheme;
     }
     private updateRTLBodyClass() {
-        if (this.isRTLEnabledTheme) {
-            document.body.classList.add('rtl-enabled');
-        } else {
-            document.body.classList.remove('rtl-enabled');
+        if (this.isBrowser && typeof document !== 'undefined' && document.body) {
+            if (this.isRTLEnabledTheme) {
+                document.body.classList.add('rtl-enabled');
+            } else {
+                document.body.classList.remove('rtl-enabled');
+            }
         }
     }
 

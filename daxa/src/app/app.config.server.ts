@@ -1,10 +1,13 @@
-import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
+import { mergeApplicationConfig, ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideServerRendering } from '@angular/platform-server';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { appConfig } from './app.config';
 
 const serverConfig: ApplicationConfig = {
     providers: [
-        provideServerRendering()
+        provideServerRendering(),
+        // Usa NoopAnimationsModule no servidor (sem animações)
+        importProvidersFrom(NoopAnimationsModule)
     ]
 };
 
